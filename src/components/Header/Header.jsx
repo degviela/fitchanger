@@ -8,7 +8,7 @@ const Header = () => {
 
     useEffect(() => {
         // Hide buttons on login and register pages
-        if (location.pathname === '/login' || location.pathname === '/register') {
+        if (location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/profile') {
             setShowButtons(false);
         } else {
             setShowButtons(true);
@@ -44,20 +44,22 @@ const Header = () => {
                         placeholder="Search styles..."
                         value={searchQuery}
                         onChange={handleSearchChange}
-                        className="w-[80%] sm:w-[70%] p-2 rounded-3xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        className="max-w-[80%] sm:w-[70%] p-2 rounded-3xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
                     />
                     <button
                         type="submit"
                         className="ml-2 p-2 bg-orange-500 text-white rounded-3xl hover:bg-orange-600 transition duration-300"
                     >
-                        Search
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>
                     </button>
                 </form>
             </div>
 
             {/* Buttons Section */}
             {showButtons && (
-                <div className="flex w-[30%] md:w-[20%] h-[100%] space-x-2 sm:space-x-4 justify-end items-center text-black font-bold">
+                <div className="flex w-[30%] md:w-[30%] h-[100%] space-x-2 sm:space-x-4 justify-end items-center text-black font-bold">
                     <Link
                         to="/login"
                         onClick={() => setShowButtons(false)}
