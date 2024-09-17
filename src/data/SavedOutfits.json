@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "carti",
+    "image": "/images/outfit1.jpg",
+    "description": "WHAE."
+  },
+  {
+    "id": 2,
+    "name": "lonely",
+    "image": "/images/outfit2.jpg",
+    "description": "SLAT"
+  },
+  {
+    "id": 3,
+    "name": "ken",
+    "image": "/images/outfit3.jpg",
+    "description": "huh"
+  },
+  {
+    "id": 4,
+    "name": "beeno",
+    "image": "/images/outfit1.jpg",
+    "description": "WHAE."
+  },
+  {
+    "id": 5,
+    "name": "meechie",
+    "image": "/images/outfit2.jpg",
+    "description": "SLAT"
+  },
+  {
+    "id": 6,
+    "name": "carson",
+    "image": "/images/outfit3.jpg",
+    "description": "huh"
+  }
+]

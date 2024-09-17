@@ -1,49 +1,67 @@
-import React from 'react';
-import {Link} from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Users from '../../data/users.json'; // Import the JSON file directly
 
 const LoginForm = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate(); // To redirect after login
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+
+        // Search for the user in the local JSON file
+        const user = Users.find(
+            (user) => user.username === username && user.password === password
+        );
+
+        if (user) {
+            // If user found, redirect to the dashboard or profile page
+            navigate('/profile');
+        } else {
+            setError('Invalid username or password');
+        }
+    };
+
     return (
         <div className="flex justify-center items-center w-full h-screen bg-gray-100">
-            {/* Container for the form */}
             <div className="flex w-[60%] h-[70%] rounded-2xl shadow-lg">
                 {/* Left Side: Login Form */}
                 <div className="flex flex-col w-[50%] h-full items-center justify-center p-10 border-gray-300">
                     <h1 className="text-3xl font-bold mb-6">Log In</h1>
 
-                    {/* Username Input */}
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    />
+                    <form onSubmit={handleLogin} className="w-full">
+                        {/* Username Input */}
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            placeholder="Username"
+                            className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        />
 
-                    {/* Password Input */}
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    />
+                        {/* Password Input */}
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Password"
+                            className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        />
 
-                    {/* Remember Me and Forgot Password */}
-                    <div className="flex justify-between w-full mb-6">
-                        <label className="flex items-center">
-                            <input type="checkbox" className="mr-2" />
-                            Remember Me
-                        </label>
-                        <a href="#" className="text-sm text-orange-500 hover:underline">Forgot Password?</a>
-                    </div>
+                        {/* Error Message */}
+                        {error && <p className="text-red-500 mb-4">{error}</p>}
 
-                    {/* Login Button */}
-                    <button className="w-full p-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition duration-300">
-                        Log In
-                    </button>
+                        {/* Login Button */}
+                        <button className="w-full p-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition duration-300">
+                            Log In
+                        </button>
+                    </form>
 
-                    {/* Or Sign Up Link */}
                     <div className="mt-6 text-gray-500">
                         Don’t have an account?
-                        <Link to = "/register">
                         <a href="/register" className="text-orange-500 ml-2 hover:underline">Sign Up</a>
-                        </Link>
                     </div>
                 </div>
 

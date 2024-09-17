@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import SavedOutfits from "./SavedOutfits";
 
 const ProfileScreen = () => {
     // State to track the selected section
@@ -13,8 +14,8 @@ const ProfileScreen = () => {
     return (
         <div className="w-full h-[90%] flex flex-row">
             {/* Sidebar Section */}
-            <div className="w-[20%] h-full bg-gray-100 flex flex-col items-start p-5">
-                <h2 className="text-xl font-bold mb-6">Menu</h2>
+            <div className="w-[20%] h-full bg-gray-100 flex flex-col items-center p-5">
+                <h2 className="text-2xl font-bold mb-6">Profile</h2>
 
                 {/* Sidebar Links */}
                 <ul className="space-y-4 w-full">
@@ -48,11 +49,7 @@ const ProfileScreen = () => {
             {/* Main Content Section */}
             <div className="w-[80%] h-full p-5">
                 {selectedSection === 'savedOutfits' && (
-                    <div>
-                        <h2 className="text-2xl font-bold mb-4">Saved Outfits</h2>
-                        <p>Here are your saved outfits!</p>
-                        {/* Add more content or components related to saved outfits */}
-                    </div>
+                    <SavedOutfits />
                 )}
 
                 {selectedSection === 'settings' && (
