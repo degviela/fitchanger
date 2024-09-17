@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Stickman from './components/Stickman';
+import Header from "./components/Header/Header";
+import Landing from "./Pages/Landing";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Router>
+                <Header />
+                <Routes>
+                    {/* Define routes */}
+                    <Route  path = "/" element={<Landing />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/demo" element={<Stickman />} />
+                    {/* Add more routes as needed */}
+                </Routes>
+        </Router>
+    );
 }
 
 export default App;
