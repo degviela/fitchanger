@@ -46,8 +46,8 @@ const RegisterForm = () => {
 
         try {
             const response = await axios.post('http://localhost/api/register', formData);
-            alert(response.data.message); // Show success message
-            navigate('/login'); // Redirect to login page
+            alert(response.data.message);
+            navigate('/login');
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 setErrors(error.response.data.errors);
@@ -55,6 +55,7 @@ const RegisterForm = () => {
                 alert('An error occurred. Please try again.');
             }
         }
+        console.log(formData);
     };
 
     return (

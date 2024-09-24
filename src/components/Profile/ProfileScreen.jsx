@@ -1,23 +1,34 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
+import axios from 'axios'; // Import axios
 import SavedOutfits from "./SavedOutfits";
 
 const ProfileScreen = () => {
-    // State to track the selected section
     const [selectedSection, setSelectedSection] = useState('');
+    const navigate = useNavigate(); // Initialize useNavigate for redirection
 
-    // Function to handle section changes
     const handleSectionChange = (section) => {
         setSelectedSection(section);
     };
 
+    const handleLogout = async () => {
+        try {
+            // Make a POST request to the logout endpoint
+            await axios.post('http://localhost/api/logout', {}, { withCredentials: true });
+            // After logging out, redirect to the login page
+            navigate('/login');
+        } catch (error) {
+            console.error('Logout failed:', error);
+            // Optionally, handle error notification
+            alert('Logout failed. Please try again.');
+        }
+    };
+
     return (
         <div className="w-full h-[90%] flex flex-row">
-            {/* Sidebar Section */}
             <div className="w-[20%] h-full bg-gray-100 flex flex-col items-center p-5">
                 <h2 className="text-2xl font-bold mb-6">Profile</h2>
 
-                {/* Sidebar Links */}
                 <ul className="space-y-4 w-full">
                     <li>
                         <button
@@ -37,16 +48,16 @@ const ProfileScreen = () => {
                     </li>
                 </ul>
 
-                {/* Spacer to push the logout button to the bottom */}
                 <div className="flex-grow"></div>
 
-                {/* Logout Button */}
-                <button className="w-full p-2 mt-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300">
+                <button
+                    onClick={handleLogout} // Attach the logout handler
+                    className="w-full p-2 mt-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300"
+                >
                     Logout
                 </button>
             </div>
 
-            {/* Main Content Section */}
             <div className="w-[80%] h-full p-5">
                 {selectedSection === 'savedOutfits' && (
                     <SavedOutfits />
@@ -56,7 +67,6 @@ const ProfileScreen = () => {
                     <div>
                         <h2 className="text-2xl font-bold mb-4">Settings</h2>
                         <p>Here you can change your settings.</p>
-                        {/* Add more content or components related to settings */}
                     </div>
                 )}
 

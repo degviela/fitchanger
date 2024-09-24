@@ -1,26 +1,32 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Users from '../../data/users.json'; // Import the JSON file directly
+import axios from 'axios'; // Axios is used for API requests
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const navigate = useNavigate(); // To redirect after login
+    const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
 
-        // Search for the user in the local JSON file
-        const user = Users.find(
-            (user) => user.username === username && user.password === password
-        );
+        try {
+            // Make API call to login endpoint
+            const response = await axios.post(
+                'http://localhost/api/login',
+                { username, password },
+                { withCredentials: true } // This tells Axios to include cookies in the request
+            );
 
-        if (user) {
-            // If user found, redirect to the dashboard or profile page
+            // If successful, redirect to the profile/dashboard page
             navigate('/profile');
-        } else {
-            setError('Invalid username or password');
+        } catch (err) {
+            if (err.response && err.response.status === 401) {
+                setError('Invalid username or password');
+            } else {
+                setError('An error occurred. Please try again.');
+            }
         }
     };
 
