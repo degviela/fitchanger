@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const [showButtons, setShowButtons] = useState(true);
     const location = useLocation();
+    const navigate = useNavigate(); // To navigate to search screen
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
-        // Hide buttons on login and register pages
-        if (location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/profile') {
+        // Hide buttons on login, register, and profile pages
+        if (
+            location.pathname === '/login' ||
+            location.pathname === '/register' ||
+            location.pathname === '/profile'
+        ) {
             setShowButtons(false);
         } else {
             setShowButtons(true);
@@ -21,8 +26,11 @@ const Header = () => {
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        console.log('Searching for:', searchQuery);
-        // Add your search logic here
+        // Navigate to SearchScreen with the search query as a query string
+        if (searchQuery.trim()) {
+            navigate(`/search?query=${searchQuery}`);
+            setSearchQuery(''); // Clear the search bar after submission
+        }
     };
 
     return (
@@ -41,14 +49,14 @@ const Header = () => {
                 <form onSubmit={handleSearchSubmit} className="w-full flex justify-center">
                     <input
                         type="text"
-                        placeholder="Search styles..."
+                        placeholder="Search users..."
                         value={searchQuery}
                         onChange={handleSearchChange}
-                        className=" bg-transparent text-white max-w-[80%] sm:w-[70%] p-2 rounded-3xl border-2 border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 placeholder-orange-500"
+                        className=" bg-transparent text-orange-500 max-w-[80%] sm:w-[70%] p-2 rounded-3xl border-2 border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:placeholder-transparent placeholder-orange-500"
                     />
                     <button
                         type="submit"
-                        className=" cursor-pointer ml-2 p-2 bg-orange-500 text-white rounded-3xl hover:bg-orange-600 transition duration-300"
+                        className="cursor-pointer ml-2 p-2 bg-orange-500 text-white rounded-3xl hover:bg-orange-600 transition duration-300"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />

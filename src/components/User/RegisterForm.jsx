@@ -1,66 +1,155 @@
-import React from 'react';
-import {Link} from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const RegisterForm = () => {
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        username: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+    });
+    const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const validate = () => {
+        const newErrors = {};
+        if (!formData.firstName) newErrors.firstName = "First name is required.";
+        if (!formData.lastName) newErrors.lastName = "Last name is required.";
+        if (!formData.username) newErrors.username = "Username is required.";
+        if (!formData.email) {
+            newErrors.email = "Email is required.";
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            newErrors.email = "Email is invalid.";
+        }
+        if (!formData.password) newErrors.password = "Password is required.";
+        if (formData.password !== formData.password_confirmation) {
+            newErrors.password_confirmation = "Passwords must match.";
+        }
+        return newErrors;
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const validationErrors = validate();
+        setErrors(validationErrors);
+        if (Object.keys(validationErrors).length > 0) return;
+
+        try {
+            const response = await axios.post('http://localhost/api/register', formData);
+            alert(response.data.message); // Show success message
+            navigate('/login'); // Redirect to login page
+        } catch (error) {
+            if (error.response && error.response.status === 400) {
+                setErrors(error.response.data.errors);
+            } else {
+                alert('An error occurred. Please try again.');
+            }
+        }
+    };
+
     return (
         <div className="flex justify-center items-center w-full h-screen bg-gray-100">
-            {/* Container for the form */}
             <div className="flex w-[60%] h-[70%] rounded-2xl shadow-lg">
-                {/* Left Side: Register Form */}
                 <div className="flex flex-col w-[50%] h-full items-center justify-center p-10 border-gray-300">
                     <h1 className="text-3xl font-bold mb-6">Sign Up</h1>
 
-                    {/* Username Input */}
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    />
+                    <form onSubmit={handleSubmit} className="w-full">
+                        {/* First Name Input */}
+                        <input
+                            type="text"
+                            name="firstName"
+                            placeholder="First Name"
+                            value={formData.firstName}
+                            onChange={handleChange}
+                            className={`w-full p-3 mb-4 border ${errors.firstName ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500`}
+                        />
+                        {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
 
-                    {/* Email Input */}
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    />
+                        {/* Last Name Input */}
+                        <input
+                            type="text"
+                            name="lastName"
+                            placeholder="Last Name"
+                            value={formData.lastName}
+                            onChange={handleChange}
+                            className={`w-full p-3 mb-4 border ${errors.lastName ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500`}
+                        />
+                        {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
 
-                    {/* Password Input */}
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    />
+                        {/* Username Input */}
+                        <input
+                            type="text"
+                            name="username"
+                            placeholder="Username"
+                            value={formData.username}
+                            onChange={handleChange}
+                            className={`w-full p-3 mb-4 border ${errors.username ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500`}
+                        />
+                        {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
 
-                    {/* Confirm Password Input */}
-                    <input
-                        type="password"
-                        placeholder="Confirm Password"
-                        className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    />
+                        {/* Email Input */}
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className={`w-full p-3 mb-4 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500`}
+                        />
+                        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
 
-                    {/* Agree to Terms and Conditions */}
-                    <div className="flex items-center mb-6">
-                        <input type="checkbox" className="mr-2" />
-                        <label className="text-sm">
-                            I agree to the <a href="#" className="text-orange-500 hover:underline">Terms and Conditions</a>
-                        </label>
-                    </div>
+                        {/* Password Input */}
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            className={`w-full p-3 mb-4 border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500`}
+                        />
+                        {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
 
-                    {/* Register Button */}
-                    <button className="w-full p-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition duration-300">
-                        Register
-                    </button>
+                        {/* Confirm Password Input */}
+                        <input
+                            type="password"
+                            name="password_confirmation"
+                            placeholder="Confirm Password"
+                            value={formData.password_confirmation}
+                            onChange={handleChange}
+                            className={`w-full p-3 mb-4 border ${errors.password_confirmation ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500`}
+                        />
+                        {errors.password_confirmation && <p className="text-red-500 text-sm">{errors.password_confirmation}</p>}
 
-                    {/* Or Login Link */}
+                        {/* Agree to Terms and Conditions */}
+                        <div className="flex items-center mb-6">
+                            <input type="checkbox" className="mr-2" />
+                            <label className="text-sm">
+                                I agree to the <a href="#" className="text-orange-500 hover:underline">Terms and Conditions</a>
+                            </label>
+                        </div>
+
+                        {/* Register Button */}
+                        <button type="submit" className="w-full p-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition duration-300">
+                            Register
+                        </button>
+                    </form>
+
                     <div className="mt-6 text-gray-500">
                         Already have an account?
-                        <Link to = "/login">
-                        <a href="/login" className="text-orange-500 ml-2 hover:underline">Log In</a>
-                        </Link>
+                        <Link to="/login" className="text-orange-500 ml-2 hover:underline">Log In</Link>
                     </div>
                 </div>
 
-                {/* Right Side: Logo */}
                 <div className="flex items-center justify-center w-[50%] h-full p-10 bg-gray-50 rounded-2xl">
                     <img
                         src="/images/fitchangerlogo3.png"

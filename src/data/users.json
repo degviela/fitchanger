@@ -1,17 +1,23 @@
 [
   {
     "id": 1,
-    "username": "user1",
-    "password": "password123"
+    "username": "slangnn",
+    "password": "password123",
+    "description": "im not straight nor agy",
+    "email": "email@email.com"
   },
   {
     "id": 2,
-    "username": "user2",
-    "password": "mypassword"
+    "username": "niks12pro",
+    "password": "mypassword",
+    "email": "email@emaail.com",
+    "description":"i love clothes"
   },
   {
     "id": 3,
     "username": "user3",
-    "password": "letmein"
+    "password": "letmein",
+    "description": "im a man",
+    "email": "email@emaail.com"
   }
 ]

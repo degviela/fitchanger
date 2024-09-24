@@ -6,6 +6,7 @@ import Landing from "./Pages/Landing";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Profile from "./Pages/Profile";
+import Search from "./Pages/Search";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                     {/* Define routes */}
                     <Route  path = "/" element={<Landing />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/search" element={<Search />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/demo" element={<Stickman />} />
                     <Route path = "/profile" element={<Profile />} />
