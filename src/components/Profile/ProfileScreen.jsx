@@ -14,9 +14,14 @@ const ProfileScreen = () => {
     const handleLogout = async () => {
         try {
             // Make a POST request to the logout endpoint
-            await axios.post('http://localhost/api/logout', {}, { withCredentials: true });
+            await axios.post('http://localhost/api/logout', {}, {
+                withCredentials: true,
+                headers: {
+                    'Accept':'application/json',
+                }
+
+            });
             // After logging out, redirect to the login page
-            navigate('/login');
         } catch (error) {
             console.error('Logout failed:', error);
             // Optionally, handle error notification
