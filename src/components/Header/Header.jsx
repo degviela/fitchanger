@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import HeaderButton from '../Utilities/Buttons/HeaderButton';
 
 const Header = () => {
     const [showButtons, setShowButtons] = useState(true);
+    const [menuOpen, setMenuOpen] = useState(false);
     const location = useLocation();
-    const navigate = useNavigate(); // To navigate to search screen
+    const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
-        // Hide buttons on login, register, and profile pages
         if (
             location.pathname === '/login' ||
             location.pathname === '/register' ||
@@ -26,17 +27,20 @@ const Header = () => {
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        // Navigate to SearchScreen with the search query as a query string
         if (searchQuery.trim()) {
             navigate(`/search?query=${searchQuery}`);
-            setSearchQuery(''); // Clear the search bar after submission
+            setSearchQuery('');
         }
     };
 
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
+
     return (
-        <div className="p-5 w-full h-[10%] text-black flex justify-between items-center bg-transparent fixed top-0 z-50">
+        <div className="p-5 w-full h-[10%] text-black flex justify-between items-center bg-white bg-opacity-30 fixed top-0 z-50">
             {/* Logo Section */}
-            <div className="w-[20%] h-[100%] flex justify-start items-center">
+            <div className="w-[20%] h-full flex justify-start items-center">
                 <Link to="/">
                     <button className="w-[50px] sm:w-[60px] md:w-[70px] lg:w-[80px] h-full">
                         <img className="w-full h-full object-contain" src="/images/fitchangerlogo3.png" alt="logo" />
@@ -45,43 +49,83 @@ const Header = () => {
             </div>
 
             {/* Search Bar Section */}
-            <div className="flex-grow md:w-[35%] h-[100%] flex justify-center items-center">
-                <form onSubmit={handleSearchSubmit} className="w-full flex justify-center">
+            <div className="flex-grow md:w-[35%] h-full flex justify-center items-center">
+                <form onSubmit={handleSearchSubmit} className="w-full flex justify-center relative">
                     <input
                         type="text"
                         placeholder="Search users..."
                         value={searchQuery}
                         onChange={handleSearchChange}
-                        className=" bg-transparent text-orange-500 max-w-[80%] sm:w-[70%] p-2 rounded-3xl border-2 border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:placeholder-transparent placeholder-orange-500"
+                        className="bg-white text-black w-full max-w-[80%] sm:max-w-[70%] p-2 pl-4 pr-10 rounded-2xl border-2 border-black focus:outline-none focus:ring-2 focus:ring-black focus:placeholder-transparent placeholder-black"
                     />
                     <button
                         type="submit"
-                        className="cursor-pointer ml-2 p-2 bg-orange-500 text-white rounded-3xl hover:bg-orange-600 transition duration-300"
+                        className="border-l-2 border-l-gray-100 absolute right-1 sm:right-28 top-1/2 transform -translate-y-1/2 p-2 bg-transparent text-black"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                         </svg>
                     </button>
                 </form>
             </div>
 
+            {/* Burger Menu Icon */}
+            <div className="md:hidden flex items-center">
+                <button onClick={toggleMenu} className="text-black focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+
             {/* Buttons Section */}
-            {showButtons && (
-                <div className="flex w-[30%] md:w-[30%] h-[100%] space-x-2 sm:space-x-4 justify-end items-center text-black font-bold">
-                    <Link
-                        to="/login"
-                        onClick={() => setShowButtons(false)}
-                        className="flex justify-center p-2 sm:p-3 bg-transparent w-[40%] sm:w-[30%] text-orange-500 rounded-3xl border-orange-500 border-2 hover:transition hover:ease-in-out hover:bg-orange-500 hover:text-white text-xs sm:text-sm md:text-base"
-                    >
-                        Login
-                    </Link>
-                    <Link
-                        to="/register"
-                        onClick={() => setShowButtons(false)}
-                        className="flex justify-center p-2 sm:p-3 bg-transparent w-[40%] sm:w-[30%] rounded-3xl border-black border-2 hover:transition hover:ease-in-out hover:bg-black hover:text-white text-xs sm:text-sm md:text-base"
-                    >
-                        Sign Up
-                    </Link>
+            <div className="hidden md:flex w-[30%] md:w-[30%] h-full space-x-2 sm:space-x-4 justify-end items-center text-black font-bold pr-5">
+                {showButtons && (
+                    <>
+                        <HeaderButton
+                            to="/login"
+                            onClick={() => setShowButtons(false)}
+                            color="bg-orange-500 text-white hover:bg-orange-600"
+                        >
+                            Login
+                        </HeaderButton>
+                        <HeaderButton
+                            to="/register"
+                            onClick={() => setShowButtons(false)}
+                            color="bg-black text-white hover:bg-gray-800"
+                        >
+                            Sign Up
+                        </HeaderButton>
+                    </>
+                )}
+            </div>
+
+            {/* Mobile Menu */}
+            {menuOpen && (
+                <div className="absolute top-0 left-0 w-full h-screen bg-white flex flex-col items-center justify-center z-40">
+                    <button onClick={toggleMenu} className="absolute top-5 right-5 text-black focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    {showButtons && (
+                        <div className="flex flex-col space-y-4">
+                            <Link
+                                to="/login"
+                                onClick={toggleMenu}
+                                className="px-6 py-3 bg-orange-500 text-white text-lg rounded-full hover:bg-orange-600 transition duration-300"
+                            >
+                                Login
+                            </Link>
+                            <Link
+                                to="/register"
+                                onClick={toggleMenu}
+                                className="px-6 py-3 bg-black text-white text-lg rounded-full hover:bg-gray-800 transition duration-300"
+                            >
+                                Sign Up
+                            </Link>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
