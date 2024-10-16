@@ -45,17 +45,24 @@ const RegisterForm = () => {
         if (Object.keys(validationErrors).length > 0) return;
 
         try {
-            const response = await axios.post('http://localhost/api/register', formData);
-            alert(response.data.message);
-            navigate('/login');
-        } catch (error) {
-            if (error.response && error.response.status === 400) {
-                setErrors(error.response.data.errors);
+            await axios.get('http://localhost/sanctum/csrf-cookie', { withCredentials: true });
+
+            const registerResponse = await axios.post('http://localhost/register', formData, { withCredentials: true });
+
+            console.log(registerResponse); // Log the response
+
+            if (registerResponse.status === 204) {
+                navigate('/login');
             } else {
-                alert('An error occurred. Please try again.');
+                setErrors({ general: 'Registration failed. Please try again.' });
+            }
+        } catch (err) {
+            if (err.response && err.response.status === 422) {
+                setErrors(err.response.data.errors);
+            } else {
+                setErrors({ general: 'Error during registration. Please try again.' });
             }
         }
-        console.log(formData);
     };
 
     return (
@@ -144,6 +151,8 @@ const RegisterForm = () => {
                             Register
                         </button>
                     </form>
+
+                    {errors.general && <p className="text-red-500 text-sm mt-4">{errors.general}</p>}
 
                     <div className="mt-6 text-gray-500">
                         Already have an account?

@@ -3,7 +3,7 @@ import ProfileScreen from "../components/Profile/ProfileScreen";
 
 const Profile = () => {
     return (
-        <div className="w-screen h-screen flex justify-end items-end">
+        <div className="w-screen h-screen flex">
             <ProfileScreen />
         </div>
     );

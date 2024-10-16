@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Axios is used for API requests
+import axios from 'axios';
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
@@ -12,15 +12,23 @@ const LoginForm = () => {
         e.preventDefault();
 
         try {
-            // Make API call to login endpoint
+            // Fetch the CSRF token first
+            await axios.get('http://localhost/sanctum/csrf-cookie', { withCredentials: true });
+
+            // Then make the login request
             const response = await axios.post(
-                'http://localhost/api/login',
+                'http://localhost/login',
                 { username, password },
-                { withCredentials: true } // This tells Axios to include cookies in the request
+                { withCredentials: true }
             );
 
-            // If successful, redirect to the profile/dashboard page
-            navigate('/profile');
+            console.log(response); // Log the response
+
+            if (response.status === 204 || response.status === 200) {
+                navigate('/profile');
+            } else {
+                setError('Login failed. Please try again.');
+            }
         } catch (err) {
             if (err.response && err.response.status === 401) {
                 setError('Invalid username or password');
@@ -33,12 +41,10 @@ const LoginForm = () => {
     return (
         <div className="flex justify-center items-center w-full h-screen bg-gray-100">
             <div className="flex w-[60%] h-[70%] rounded-2xl shadow-lg">
-                {/* Left Side: Login Form */}
                 <div className="flex flex-col w-[50%] h-full items-center justify-center p-10 border-gray-300">
                     <h1 className="text-3xl font-bold mb-6">Log In</h1>
 
                     <form onSubmit={handleLogin} className="w-full">
-                        {/* Username Input */}
                         <input
                             type="text"
                             value={username}
@@ -47,7 +53,6 @@ const LoginForm = () => {
                             className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                         />
 
-                        {/* Password Input */}
                         <input
                             type="password"
                             value={password}
@@ -56,10 +61,8 @@ const LoginForm = () => {
                             className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                         />
 
-                        {/* Error Message */}
                         {error && <p className="text-red-500 mb-4">{error}</p>}
 
-                        {/* Login Button */}
                         <button className="w-full p-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition duration-300">
                             Log In
                         </button>
@@ -71,7 +74,6 @@ const LoginForm = () => {
                     </div>
                 </div>
 
-                {/* Right Side: Logo */}
                 <div className="flex items-center justify-center w-[50%] h-full p-10 bg-gray-50 rounded-2xl">
                     <img
                         src="/images/fitchangerlogo3.png"

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import HeaderButton from '../Utilities/Buttons/HeaderButton';
+import axios from 'axios';
 
 const Header = () => {
     const [showButtons, setShowButtons] = useState(true);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState('');
@@ -21,6 +23,20 @@ const Header = () => {
         }
     }, [location]);
 
+    useEffect(() => {
+        // Check if the user is authenticated
+        const checkAuth = async () => {
+            try {
+                await axios.get('http://localhost/api/check-auth');
+                setIsAuthenticated(true);
+            } catch (error) {
+                setIsAuthenticated(false);
+            }
+        };
+
+        checkAuth();
+    }, []);
+
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
@@ -35,6 +51,16 @@ const Header = () => {
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
+    };
+
+    const handleLogout = async () => {
+        try {
+            await axios.post('http://localhost/api/logout', {}, { withCredentials: true });
+            setIsAuthenticated(false);
+            navigate('/login');
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
     };
 
     return (
@@ -82,20 +108,50 @@ const Header = () => {
             <div className="hidden md:flex w-[30%] md:w-[30%] h-full space-x-2 sm:space-x-4 justify-end items-center text-black font-bold pr-5">
                 {showButtons && (
                     <>
-                        <HeaderButton
-                            to="/login"
-                            onClick={() => setShowButtons(false)}
-                            color="bg-orange-500 text-white hover:bg-orange-600"
-                        >
-                            Login
-                        </HeaderButton>
-                        <HeaderButton
-                            to="/register"
-                            onClick={() => setShowButtons(false)}
-                            color="bg-black text-white hover:bg-gray-800"
-                        >
-                            Sign Up
-                        </HeaderButton>
+                        {!isAuthenticated ? (
+                            <>
+                                <HeaderButton
+                                    to="/login"
+                                    onClick={() => setShowButtons(false)}
+                                    color="bg-orange-500 text-white hover:bg-orange-600"
+                                >
+                                    Login
+                                </HeaderButton>
+                                <HeaderButton
+                                    to="/register"
+                                    onClick={() => setShowButtons(false)}
+                                    color="bg-black text-white hover:bg-gray-800"
+                                >
+                                    Sign Up
+                                </HeaderButton>
+                            </>
+                        ) : (
+                            <div className="relative">
+                                <button
+                                    onClick={toggleMenu}
+                                    className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
+                                >
+                                    Profile
+                                </button>
+                                {menuOpen && (
+                                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
+                                        <Link
+                                            to="/profile"
+                                            className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                                            onClick={toggleMenu}
+                                        >
+                                            View Profile
+                                        </Link>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+                                        >
+                                            Logout
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </>
                 )}
             </div>
@@ -110,20 +166,40 @@ const Header = () => {
                     </button>
                     {showButtons && (
                         <div className="flex flex-col space-y-4">
-                            <Link
-                                to="/login"
-                                onClick={toggleMenu}
-                                className="px-6 py-3 bg-orange-500 text-white text-lg rounded-full hover:bg-orange-600 transition duration-300"
-                            >
-                                Login
-                            </Link>
-                            <Link
-                                to="/register"
-                                onClick={toggleMenu}
-                                className="px-6 py-3 bg-black text-white text-lg rounded-full hover:bg-gray-800 transition duration-300"
-                            >
-                                Sign Up
-                            </Link>
+                            {!isAuthenticated ? (
+                                <>
+                                    <Link
+                                        to="/login"
+                                        onClick={toggleMenu}
+                                        className="px-6 py-3 bg-orange-500 text-white text-lg rounded-full hover:bg-orange-600 transition duration-300"
+                                    >
+                                        Login
+                                    </Link>
+                                    <Link
+                                        to="/register"
+                                        onClick={toggleMenu}
+                                        className="px-6 py-3 bg-black text-white text-lg rounded-full hover:bg-gray-800 transition duration-300"
+                                    >
+                                        Sign Up
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Link
+                                        to="/profile"
+                                        onClick={toggleMenu}
+                                        className="px-6 py-3 bg-gray-800 text-white text-lg rounded-full hover:bg-gray-700 transition duration-300"
+                                    >
+                                        Profile
+                                    </Link>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="px-6 py-3 bg-red-500 text-white text-lg rounded-full hover:bg-red-600 transition duration-300"
+                                    >
+                                        Logout
+                                    </button>
+                                </>
+                            )}
                         </div>
                     )}
                 </div>

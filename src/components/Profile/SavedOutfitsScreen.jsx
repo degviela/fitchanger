@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import savedOutfitsData from '../../data/SavedOutfits.json'; // Adjust the path based on your structure
 
-const SavedOutfits = () => {
+const SavedOutfitsScreen = () => {
     const [savedOutfits, setSavedOutfits] = useState([]);
 
     useEffect(() => {
@@ -28,4 +28,4 @@ const SavedOutfits = () => {
     );
 };
 
-export default SavedOutfits;
+export default SavedOutfitsScreen;
