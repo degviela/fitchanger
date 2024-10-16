@@ -5,6 +5,7 @@ import SavedOutfitsScreen from './SavedOutfitsScreen';
 import MainSection from './MainProfileSection';
 import Sidebar from './ProfileSidebar';
 import Settings from './Settings';
+import FriendList from './FriendList';
 
 const ProfileScreen = () => {
     const [selectedSection, setSelectedSection] = useState('main');
@@ -42,6 +43,7 @@ const ProfileScreen = () => {
             <div className="w-[80%] h-full p-5">
                 {selectedSection === 'main' && <MainSection />}
                 {selectedSection === 'savedOutfits' && <SavedOutfitsScreen />}
+                {selectedSection === 'Friends' && <FriendList />}
                 {selectedSection === 'settings' && <Settings />}
                 {!selectedSection && (
                     <div>
