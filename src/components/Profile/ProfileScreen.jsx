@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import SavedOutfitsScreen from './SavedOutfitsScreen';
 import MainSection from './MainProfileSection';
 import Sidebar from './ProfileSidebar';
 import Settings from './Settings';
 import FriendList from './FriendList';
+import './ProfileScreen.css'; // Import the CSS file for animations
 
 const ProfileScreen = () => {
     const [selectedSection, setSelectedSection] = useState('main');
+    const [friends, setFriends] = useState([
+        { name: 'Alko/hols' },
+        { name: 'Trakais' },
+    ]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,6 +23,10 @@ const ProfileScreen = () => {
 
     const handleSectionChange = (section) => {
         setSelectedSection(section);
+    };
+
+    const handleAddFriend = (username) => {
+        setFriends([...friends, { name: username }]);
     };
 
     const handleLogout = async () => {
@@ -41,15 +51,25 @@ const ProfileScreen = () => {
                 handleLogout={handleLogout}
             />
             <div className="w-[80%] h-full p-5">
-                {selectedSection === 'main' && <MainSection />}
-                {selectedSection === 'savedOutfits' && <SavedOutfitsScreen />}
-                {selectedSection === 'Friends' && <FriendList />}
-                {selectedSection === 'settings' && <Settings />}
-                {!selectedSection && (
-                    <div>
-                        <h2 className="text-xl text-gray-500">Select a menu option</h2>
-                    </div>
-                )}
+                <TransitionGroup>
+                    <CSSTransition
+                        key={selectedSection}
+                        timeout={300}
+                        classNames="fade"
+                    >
+                        <div>
+                            {selectedSection === 'main' && <MainSection />}
+                            {selectedSection === 'savedOutfits' && <SavedOutfitsScreen />}
+                            {selectedSection === 'friends' && <FriendList friends={friends} onAddFriend={handleAddFriend} />}
+                            {selectedSection === 'settings' && <Settings />}
+                            {!selectedSection && (
+                                <div>
+                                    <h2 className="text-xl text-gray-500">Select a menu option</h2>
+                                </div>
+                            )}
+                        </div>
+                    </CSSTransition>
+                </TransitionGroup>
             </div>
         </div>
     );

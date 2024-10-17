@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProfileSidebar = ({ handleSectionChange, handleLogout }) => {
     return (
-        <div className="w-[20%] h-full bg-gray-200 flex flex-col items-center p-5 dark:bg-gray-900 dark:text-gray-">
+        <div className="w-[20%] h-full bg-gray-300 flex flex-col items-center p-5 dark:bg-gray-900 dark:text-gray-">
             <h2 className="text-2xl dark:text-white font-bold mb-6">Profile</h2>
 
             <ul className="space-y-4 w-full">
