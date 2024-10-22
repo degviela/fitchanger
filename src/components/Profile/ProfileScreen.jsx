@@ -15,9 +15,24 @@ const ProfileScreen = () => {
         { name: 'Alko/hols' },
         { name: 'Trakais' },
     ]);
+    const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get('http://localhost/api/user', {
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
+                setUser(response.data);
+            } catch (error) {
+                console.error('Failed to fetch user data:', error);
+            }
+        };
+
+        fetchUserData();
         setSelectedSection('main');
     }, []);
 
@@ -58,7 +73,7 @@ const ProfileScreen = () => {
                         classNames="fade"
                     >
                         <div>
-                            {selectedSection === 'main' && <MainSection />}
+                            {selectedSection === 'main' && <MainSection user={user} />}
                             {selectedSection === 'savedOutfits' && <SavedOutfitsScreen />}
                             {selectedSection === 'friends' && <FriendList friends={friends} onAddFriend={handleAddFriend} />}
                             {selectedSection === 'settings' && <Settings />}
