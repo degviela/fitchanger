@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const ProfileSidebar = ({ handleSectionChange, handleLogout }) => {
     return (
@@ -27,6 +28,18 @@ const ProfileSidebar = ({ handleSectionChange, handleLogout }) => {
                         </svg>
                         Saved Outfits
                     </button>
+                </li>
+                <li>
+                    <Link
+                        to="/OutfitMaker"
+                        onClick={() => handleSectionChange('createOutfit')}
+                        className="flex items-center w-full p-2 rounded-lg text-black hover:bg-orange-500 hover:text-white transition duration-300 transform hover:scale-105"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 mr-4">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        Create an Outfit
+                    </Link>
                 </li>
                 <li>
                     <button

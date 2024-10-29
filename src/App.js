@@ -10,6 +10,7 @@ import Search from "./Pages/Search";
 import User from "./Pages/User";
 import axios from "axios";
 import { ThemeContext } from './components/Utilities/ThemeContext';
+import OutfitMaker from "./Pages/OutfitMaker";
 
 function App() {
     useEffect(() => {
@@ -18,7 +19,7 @@ function App() {
     });
 
     const location = useLocation();
-    const noHeaderRoutes = ['/profile'];
+    const noHeaderRoutes = ['/profile', '/OutfitMaker'];
     const { theme } = useContext(ThemeContext);
 
     useEffect(() => {
@@ -36,7 +37,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/demo" element={<Stickman />} />
                 <Route path="/profile" element={<Profile />} />
-                {/* Add more routes as needed */}
+                <Route path="/OutfitMaker" element={<OutfitMaker />} />
             </Routes>
         </div>
     );

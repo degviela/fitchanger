@@ -7,7 +7,7 @@ import MainSection from './MainProfileSection';
 import Sidebar from './ProfileSidebar';
 import Settings from './Settings';
 import FriendList from './FriendList';
-import './ProfileScreen.css'; // Import the CSS file for animations
+import './ProfileScreen.css';
 
 const ProfileScreen = () => {
     const [selectedSection, setSelectedSection] = useState('main');
@@ -21,10 +21,11 @@ const ProfileScreen = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get('http://localhost/api/user', {
+                const response = await axios.get('http://localhost/api/authenticated/user', {
                     headers: {
                         'Accept': 'application/json',
-                    }
+                    },
+                    withCredentials: true // Ensure cookies are sent with the request
                 });
                 setUser(response.data);
             } catch (error) {
@@ -50,7 +51,8 @@ const ProfileScreen = () => {
             await axios.post('http://localhost/logout', {}, {
                 headers: {
                     'Accept':'application/json',
-                }
+                },
+                withCredentials: true
             });
             navigate('/login'); // Redirect to login page after logout
         } catch (error) {
@@ -74,7 +76,7 @@ const ProfileScreen = () => {
                     >
                         <div>
                             {selectedSection === 'main' && <MainSection user={user} />}
-                            {selectedSection === 'savedOutfits' && <SavedOutfitsScreen />}
+                            {selectedSection === 'savedOutfits' && user && <SavedOutfitsScreen userId={user.id} />}
                             {selectedSection === 'friends' && <FriendList friends={friends} onAddFriend={handleAddFriend} />}
                             {selectedSection === 'settings' && <Settings />}
                             {!selectedSection && (

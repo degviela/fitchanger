@@ -17,8 +17,8 @@ const MainProfileSection = ({ user }) => {
                 <div>
                     <h2 className="text-5xl font-bold">{user.username}</h2>
                     <div className="mt-4">
-                        <p className="text-lg">Friends: {user.friendsCount}</p>
-                        <p className="text-lg">Outfits: {user.outfitsCount}</p>
+                        {/*<p className="text-lg">Friends: {user.friendsCount}</p>*/}
+                        {/*<p className="text-lg">Outfits: {user.outfitsCount}</p>*/}
                     </div>
                 </div>
             </div>
