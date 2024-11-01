@@ -33,7 +33,7 @@ const OutfitCreation = () => {
                     headers: {
                         'Accept': 'application/json',
                     },
-                    withCredentials: true // Ensure cookies are sent with the request
+                    withCredentials: true
                 });
                 setUserId(response.data.id);
             } catch (error) {
@@ -107,7 +107,7 @@ const OutfitCreation = () => {
     return (
         <div className="w-screen h-[80%] bg-white flex flex-row justify-center items-center">
             <div className="w-[50%] h-screen flex flex-col justify-center items-center">
-                {/* Skin Tone Selector */}
+                {/* Krāsu toņi */}
                 <div className="mb-4 flex space-x-4">
                     {skinTones.map((tone) => (
                         <button
@@ -121,10 +121,10 @@ const OutfitCreation = () => {
                 </div>
 
                 <div className="w-[40%] h-[70%] relative flex flex-col justify-center items-center">
-                    {/* Head */}
+                    {/* Galva */}
                     <div className="w-full h-[20%] flex justify-center items-end relative">
                         <div id="head" className="w-[140px] h-[140px] border-2 rounded-full" style={{ backgroundColor: skinColor }}></div>
-                        {/* Clothing on Head */}
+                        {/* Drēbes galvai */}
                         {selectedClothes.head && (
                             <img
                                 src={getImageUrl(selectedClothes.head.image_path)}
@@ -134,13 +134,13 @@ const OutfitCreation = () => {
                         )}
                     </div>
 
-                    {/* Torso + Arms */}
+                    {/* Augšdaļa */}
                     <div className="w-full h-[30%] flex justify-center items-start relative">
                         <div id="leftarm" className="w-[50px] h-[200px] border-2" style={{ backgroundColor: skinColor }}></div>
                         <div id="torso" className="w-[150px] h-[200px] border-2" style={{ backgroundColor: skinColor }}></div>
                         <div id="rightarm" className="w-[50px] h-[200px] border-2" style={{ backgroundColor: skinColor }}></div>
 
-                        {/* Clothing on Torso */}
+                        {/* Augšdaļas drēbes */}
                         {selectedClothes.top && (
                             <img
                                 src={getImageUrl(selectedClothes.top.image_path)}
@@ -150,13 +150,13 @@ const OutfitCreation = () => {
                         )}
                     </div>
 
-                    {/* Legs */}
+                    {/* Apakšdaļa */}
                     <div className="w-full h-[25%] flex justify-center items-start relative">
                         <div className="h-full w-[150px] flex">
                             <div id="leftleg" className="h-[150px] w-[75px] border-2" style={{ backgroundColor: skinColor }}></div>
                             <div id="rightleg" className="h-[150px] w-[75px] border-2" style={{ backgroundColor: skinColor }}></div>
                         </div>
-                        {/* Clothing on Legs */}
+                        {/* Apakšdaļas virsdrēbes */}
                         {selectedClothes.bottom && (
                             <img
                                 src={getImageUrl(selectedClothes.bottom.image_path)}
@@ -166,10 +166,10 @@ const OutfitCreation = () => {
                         )}
                     </div>
 
-                    {/* Shoes */}
-                    <div className="w-full h-[5%] flex justify-center items-end relative">
-                        <div className="h-[20px] w-[150px] border-2"></div>
-                        {/* Clothing on Shoes */}
+                    {/* Pēdas */}
+                    <div className="w-full h-[5%] flex justify-center items-end relative"  >
+                        <div className="h-[20px] w-[150px] border-2" style={{ backgroundColor: skinColor }}></div>
+                        {/* Kurpes */}
                         {selectedClothes.footwear && (
                             <img
                                 src={getImageUrl(selectedClothes.footwear.image_path)}
@@ -194,7 +194,7 @@ const OutfitCreation = () => {
                             placeholder="Outfit Name"
                             className="mb-4 p-2 border rounded w-full"
                         />
-                        {/* Head Clothing */}
+                        {/* Pogas galvai */}
                         <h2 className="font-semibold">Head:</h2>
                         <div className="flex space-x-4 mb-4">
                             {clothesOptions.head.map((item) => (
@@ -208,7 +208,7 @@ const OutfitCreation = () => {
                             ))}
                         </div>
 
-                        {/* Top Clothing */}
+                        {/* Augšdaļas Pogas */}
                         <h2 className="font-semibold">Top:</h2>
                         <div className="flex space-x-4 mb-4">
                             {clothesOptions.top.map((item) => (
@@ -222,7 +222,7 @@ const OutfitCreation = () => {
                             ))}
                         </div>
 
-                        {/* Bottom Clothing */}
+                        {/* Apakšdaļas pogas  */}
                         <h2 className="font-semibold">Bottom:</h2>
                         <div className="flex space-x-4 mb-4">
                             {clothesOptions.bottom.map((item) => (
@@ -236,7 +236,7 @@ const OutfitCreation = () => {
                             ))}
                         </div>
 
-                        {/* Footwear Clothing */}
+                        {/* Kurpju pogas */}
                         <h2 className="font-semibold">Footwear:</h2>
                         <div className="flex space-x-4 mb-4">
                             {clothesOptions.footwear.map((item) => (

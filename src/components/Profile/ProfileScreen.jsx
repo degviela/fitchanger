@@ -7,6 +7,7 @@ import MainSection from './MainProfileSection';
 import Sidebar from './ProfileSidebar';
 import Settings from './Settings';
 import FriendList from './FriendList';
+import AllClothesCatalog from './AllClothesCatalog'; // Import the new component
 import './ProfileScreen.css';
 
 const ProfileScreen = () => {
@@ -62,12 +63,12 @@ const ProfileScreen = () => {
     };
 
     return (
-        <div className="w-full h-full flex flex-row">
+        <div className="w-[full] h-full flex overflow-hidden">
             <Sidebar
                 handleSectionChange={handleSectionChange}
                 handleLogout={handleLogout}
             />
-            <div className="w-[80%] h-full p-5">
+            <div className="w-[80%] h-full p-5 flex">
                 <TransitionGroup>
                     <CSSTransition
                         key={selectedSection}
@@ -79,6 +80,7 @@ const ProfileScreen = () => {
                             {selectedSection === 'savedOutfits' && user && <SavedOutfitsScreen userId={user.id} />}
                             {selectedSection === 'friends' && <FriendList friends={friends} onAddFriend={handleAddFriend} />}
                             {selectedSection === 'settings' && <Settings />}
+                            {selectedSection === 'clothingCatalog' && <AllClothesCatalog />} {/* Add the new section */}
                             {!selectedSection && (
                                 <div>
                                     <h2 className="text-xl text-gray-500">Select a menu option</h2>

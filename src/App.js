@@ -19,7 +19,7 @@ function App() {
     });
 
     const location = useLocation();
-    const noHeaderRoutes = ['/profile', '/OutfitMaker'];
+    const noHeaderRoutes = ['/profile', '/OutfitMaker', '/user/:id'];
     const { theme } = useContext(ThemeContext);
 
     useEffect(() => {
