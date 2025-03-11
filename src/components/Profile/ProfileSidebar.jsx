@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const ProfileSidebar = ({ handleSectionChange, handleLogout }) => {
     return (
@@ -62,6 +62,17 @@ const ProfileSidebar = ({ handleSectionChange, handleLogout }) => {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
                         Settings
+                    </button>
+                </li>
+                <li>
+                    <button
+                        onClick={() => handleSectionChange('clothingCatalog')}
+                        className="flex items-center w-full p-2 rounded-lg text-black hover:bg-orange-500 hover:text-white transition duration-300 transform hover:scale-105"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 mr-4">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h18v18H3V3z" />
+                        </svg>
+                        All Clothes
                     </button>
                 </li>
             </ul>

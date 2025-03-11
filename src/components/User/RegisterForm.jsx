@@ -13,6 +13,7 @@ const RegisterForm = () => {
     });
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
+    const AUTH_URL = `${process.env.REACT_APP_AUTH_URL}`;
 
     const handleChange = (e) => {
         setFormData({
@@ -42,12 +43,13 @@ const RegisterForm = () => {
         e.preventDefault();
         const validationErrors = validate();
         setErrors(validationErrors);
+
         if (Object.keys(validationErrors).length > 0) return;
 
         try {
-            await axios.get('http://localhost/sanctum/csrf-cookie', { withCredentials: true });
+            await axios.get(`${AUTH_URL}/sanctum/csrf-cookie`, { withCredentials: true });
 
-            const registerResponse = await axios.post('http://localhost/register', formData, { withCredentials: true });
+            const registerResponse = await axios.post(`${AUTH_URL}/register`, formData, { withCredentials: true });
 
             console.log(registerResponse); // Log the response
 

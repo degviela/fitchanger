@@ -5,10 +5,12 @@ const SavedOutfitsScreen = ({ userId }) => {
     const [savedOutfits, setSavedOutfits] = useState([]);
     const [clothingItems, setClothingItems] = useState({});
 
+    const API_URL = process.env.REACT_APP_API_URL;
+
     useEffect(() => {
         const fetchSavedOutfits = async () => {
             try {
-                const response = await axios.get(`http://localhost/api/authenticated/outfits/user/${userId}`);
+                const response = await axios.get(`${API_URL}/outfits/user/${userId}`);
                 setSavedOutfits(response.data);
                 const clothingIds = new Set();
                 response.data.forEach(outfit => {
@@ -27,7 +29,7 @@ const SavedOutfitsScreen = ({ userId }) => {
             try {
                 const items = {};
                 await Promise.all(ids.map(async (id) => {
-                    const response = await axios.get(`http://localhost/api/authenticated/clothingitems/${id}`);
+                    const response = await axios.get(`${API_URL}/clothingitems/${id}`);
                     items[id] = response.data;
                 }));
                 setClothingItems(items);

@@ -19,10 +19,12 @@ const ProfileScreen = () => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
+    const API_URL = process.env.REACT_APP_API_URL;
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get('http://localhost/api/authenticated/user', {
+                const response = await axios.get(`${API_URL}/user`, {
                     headers: {
                         'Accept': 'application/json',
                     },
@@ -48,8 +50,8 @@ const ProfileScreen = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.get('http://localhost/sanctum/csrf-cookie');
-            await axios.post('http://localhost/logout', {}, {
+            await axios.get(`${API_URL}/sanctum/csrf-cookie`);
+            await axios.post(`${API_URL}/logout`, {}, {
                 headers: {
                     'Accept':'application/json',
                 },

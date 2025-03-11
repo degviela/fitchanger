@@ -8,16 +8,18 @@ const LoginForm = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    const AUTH_URL = process.env.REACT_APP_AUTH_URL;
+
     const handleLogin = async (e) => {
         e.preventDefault();
 
         try {
             // Fetch the CSRF token first
-            await axios.get('http://localhost/sanctum/csrf-cookie', { withCredentials: true });
+            await axios.get(`${AUTH_URL}/sanctum/csrf-cookie`, { withCredentials: true });
 
             // Then make the login request
             const response = await axios.post(
-                'http://localhost/login',
+                `${AUTH_URL}/login`,
                 { username, password },
                 { withCredentials: true }
             );

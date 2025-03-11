@@ -25,11 +25,12 @@ const OutfitCreation = () => {
         { name: 'Medium Dark', color: '#A67B5B' },
         { name: 'Dark', color: '#8D5524' }
     ];
+    const API_URL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get('http://localhost/api/authenticated/user', {
+                const response = await axios.get(`${API_URL}/user`, {
                     headers: {
                         'Accept': 'application/json',
                     },
@@ -43,7 +44,7 @@ const OutfitCreation = () => {
 
         const fetchClothes = async () => {
             try {
-                const response = await axios.get('http://localhost/api/authenticated/clothingitems', {
+                const response = await axios.get(`${API_URL}/clothingitems`, {
                     headers: {
                         'Accept': 'application/json',
                     }
@@ -91,7 +92,7 @@ const OutfitCreation = () => {
         };
 
         try {
-            await axios.post('http://localhost/api/authenticated/outfits', outfitData, {
+            await axios.post(`${API_URL}/outfits`, outfitData, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
