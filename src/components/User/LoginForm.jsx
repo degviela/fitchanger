@@ -41,8 +41,8 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="flex justify-center items-center w-full h-screen bg-gray-100">
-            <div className="flex w-[60%] h-[70%] rounded-2xl shadow-lg">
+        <div className="flex justify-center items-center w-full h-screen bg-gray-100 dark:bg-black dark:bg-opacity-10">
+            <div className="flex w-[60%] h-[70%] rounded-2xl shadow-lg dark:bg-black dark:bg-opacity-15 ">
                 <div className="flex flex-col w-[50%] h-full items-center justify-center p-10 border-gray-300">
                     <h1 className="text-3xl font-bold mb-6">Log In</h1>
 
@@ -76,7 +76,7 @@ const LoginForm = () => {
                     </div>
                 </div>
 
-                <div className="flex items-center justify-center w-[50%] h-full p-10 bg-gray-50 rounded-2xl">
+                <div className="flex items-center justify-center w-[50%] h-full p-10 bg-gray-50 rounded-2xl dark:bg-gray-900">
                     <img
                         src="/images/fitchangerlogo3.png"
                         alt="FitChanger Logo"

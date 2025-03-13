@@ -64,7 +64,7 @@ const Header = () => {
     };
 
     return (
-        <div className="p-5 w-full h-[10%] text-black flex justify-between items-center bg-white bg-opacity-30 fixed top-0 z-50">
+        <div className="p-5 w-full h-[10%] text-black flex justify-between items-center bg-white bg-opacity-30 dark:bg-black dark:bg-opacity-15 fixed top-0 z-50">
             {/* Logo Section */}
             <div className="w-[20%] h-full flex justify-start items-center">
                 <Link to="/">

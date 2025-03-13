@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {toast} from "react-toastify";
 
 const OutfitCreation = () => {
     const [skinColor, setSkinColor] = useState('#FAD7B5'); // Default skin tone
@@ -25,6 +26,10 @@ const OutfitCreation = () => {
         { name: 'Medium Dark', color: '#A67B5B' },
         { name: 'Dark', color: '#8D5524' }
     ];
+    const showToast = () => {
+        toast.error("Profile updated successfully!");
+    };
+
     const API_URL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
@@ -98,23 +103,23 @@ const OutfitCreation = () => {
                     'Content-Type': 'application/json'
                 }
             });
-            alert('Outfit saved successfully!');
+            toast.success('Outfit saved successfully!');
         } catch (error) {
             console.error('Failed to save outfit:', error);
-            alert('Failed to save outfit. Please try again.');
+            toast.error('Failed to save outfit. Please try again.');
         }
     };
 
     return (
-        <div className="w-screen h-[80%] bg-white flex flex-row justify-center items-center">
+        <div className="w-screen h-[80%] bg-white flex flex-row justify-center items-center dark:bg-gray-900">
             <div className="w-[50%] h-screen flex flex-col justify-center items-center">
-                {/* Krāsu toņi */}
+                {/* Ādas toņi */}
                 <div className="mb-4 flex space-x-4">
                     {skinTones.map((tone) => (
                         <button
                             key={tone.name}
                             onClick={() => setSkinColor(tone.color)}
-                            className="w-10 h-10 rounded-full border-2"
+                            className="w-10 h-10 rounded-full border-2 dark:border-white"
                             style={{ backgroundColor: tone.color }}
                             title={tone.name}
                         ></button>
@@ -124,7 +129,7 @@ const OutfitCreation = () => {
                 <div className="w-[40%] h-[70%] relative flex flex-col justify-center items-center">
                     {/* Galva */}
                     <div className="w-full h-[20%] flex justify-center items-end relative">
-                        <div id="head" className="w-[140px] h-[140px] border-2 rounded-full" style={{ backgroundColor: skinColor }}></div>
+                        <div id="head" className="w-[140px] h-[140px] rounded-full" style={{ backgroundColor: skinColor }}></div>
                         {/* Drēbes galvai */}
                         {selectedClothes.head && (
                             <img
@@ -137,9 +142,9 @@ const OutfitCreation = () => {
 
                     {/* Augšdaļa */}
                     <div className="w-full h-[30%] flex justify-center items-start relative">
-                        <div id="leftarm" className="w-[50px] h-[200px] border-2" style={{ backgroundColor: skinColor }}></div>
-                        <div id="torso" className="w-[150px] h-[200px] border-2" style={{ backgroundColor: skinColor }}></div>
-                        <div id="rightarm" className="w-[50px] h-[200px] border-2" style={{ backgroundColor: skinColor }}></div>
+                        <div id="leftarm" className="w-[50px] h-[200px]" style={{ backgroundColor: skinColor }}></div>
+                        <div id="torso" className="w-[150px] h-[200px]" style={{ backgroundColor: skinColor }}></div>
+                        <div id="rightarm" className="w-[50px] h-[200px]" style={{ backgroundColor: skinColor }}></div>
 
                         {/* Augšdaļas drēbes */}
                         {selectedClothes.top && (
@@ -154,8 +159,8 @@ const OutfitCreation = () => {
                     {/* Apakšdaļa */}
                     <div className="w-full h-[25%] flex justify-center items-start relative">
                         <div className="h-full w-[150px] flex">
-                            <div id="leftleg" className="h-[150px] w-[75px] border-2" style={{ backgroundColor: skinColor }}></div>
-                            <div id="rightleg" className="h-[150px] w-[75px] border-2" style={{ backgroundColor: skinColor }}></div>
+                            <div id="leftleg" className="h-[150px] w-[75px]" style={{ backgroundColor: skinColor }}></div>
+                            <div id="rightleg" className="h-[150px] w-[75px]" style={{ backgroundColor: skinColor }}></div>
                         </div>
                         {/* Apakšdaļas virsdrēbes */}
                         {selectedClothes.bottom && (
@@ -169,7 +174,7 @@ const OutfitCreation = () => {
 
                     {/* Pēdas */}
                     <div className="w-full h-[5%] flex justify-center items-end relative"  >
-                        <div className="h-[20px] w-[150px] border-2" style={{ backgroundColor: skinColor }}></div>
+                        <div className="h-[20px] w-[150px]" style={{ backgroundColor: skinColor }}></div>
                         {/* Kurpes */}
                         {selectedClothes.footwear && (
                             <img
@@ -183,8 +188,8 @@ const OutfitCreation = () => {
             </div>
 
             <div className="w-[50%] h-screen flex flex-col justify-center items-center">
-                <div className="w-[70%] h-[80%] border-2 rounded-2xl shadow-lg border-black">
-                    <div className="w-full h-[10%] border-b-2 border-black flex justify-center items-center">
+                <div className="w-[70%] h-[80%] rounded-2xl shadow-lg bg-white dark:bg-black dark:bg-opacity-10">
+                    <div className="w-full h-[10%] border-black flex justify-center items-center">
                         <h1 className="font-bold text-3xl">Clothes</h1>
                     </div>
                     <div className="p-4">
@@ -193,7 +198,7 @@ const OutfitCreation = () => {
                             value={outfitName}
                             onChange={(e) => setOutfitName(e.target.value)}
                             placeholder="Outfit Name"
-                            className="mb-4 p-2 border rounded w-full"
+                            className="mb-4 p-2 border rounded w-full dark:text-black dark:bg-gray-200 dark:border-black focus:outline-none focus:placeholder-transparent"
                         />
                         {/* Pogas galvai */}
                         <h2 className="font-semibold">Head:</h2>
@@ -202,7 +207,7 @@ const OutfitCreation = () => {
                                 <button
                                     key={item.name}
                                     onClick={() => handleClothingSelect('head', item)}
-                                    className={`p-2 rounded ${selectedClothes.head === item ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                                    className={`p-2 rounded ${selectedClothes.head === item ? 'bg-blue-500 dark:bg-green-400 text-white dark:text-black' : 'bg-gray-200 dark:text-black'}`}
                                 >
                                     {item.name}
                                 </button>
@@ -216,7 +221,7 @@ const OutfitCreation = () => {
                                 <button
                                     key={item.name}
                                     onClick={() => handleClothingSelect('top', item)}
-                                    className={`p-2 rounded ${selectedClothes.top === item ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                                    className={`p-2 rounded ${selectedClothes.top === item ? 'bg-blue-500 dark:bg-green-400 text-white dark:text-black' : 'bg-gray-200 dark:text-black'}`}
                                 >
                                     {item.name}
                                 </button>
@@ -230,7 +235,7 @@ const OutfitCreation = () => {
                                 <button
                                     key={item.name}
                                     onClick={() => handleClothingSelect('bottom', item)}
-                                    className={`p-2 rounded ${selectedClothes.bottom === item ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                                    className={`p-2 rounded ${selectedClothes.bottom === item ? 'bg-blue-500 dark:bg-green-400 text-white dark:text-black' : 'bg-gray-200 dark:text-black'}`}
                                 >
                                     {item.name}
                                 </button>
@@ -244,16 +249,15 @@ const OutfitCreation = () => {
                                 <button
                                     key={item.name}
                                     onClick={() => handleClothingSelect('footwear', item)}
-                                    className={`p-2 rounded ${selectedClothes.footwear === item ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                                    className={`p-2 rounded ${selectedClothes.footwear === item ? 'bg-blue-500 dark:bg-green-400 text-white dark:text-black' : 'bg-gray-200 dark:text-black'}`}
                                 >
                                     {item.name}
                                 </button>
                             ))}
                         </div>
-
                         <button
                             onClick={handleSaveOutfit}
-                            className="mt-4 p-2 bg-green-500 text-white rounded"
+                            className="mt-4 p-2 bg-green-500 text-white rounded transition duration-300 ease-in-out transform hover:bg-green-600 hover:scale-105"
                         >
                             Save Outfit
                         </button>

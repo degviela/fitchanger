@@ -11,6 +11,7 @@ import User from "./Pages/User";
 import axios from "axios";
 import { ThemeContext } from './components/Utilities/ThemeContext';
 import OutfitMaker from "./Pages/OutfitMaker";
+import {ToastContainer} from "react-toastify";
 
 function App() {
     useEffect(() => {
@@ -27,7 +28,12 @@ function App() {
     }, [theme]);
 
     return (
-        <div className="min-h-screen bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+        <div className="min-h-screen bg-gray-200 dark:bg-black dark:bg-opacity-10 text-gray-900 dark:text-gray-100">
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                theme="colored"
+            />
             {!noHeaderRoutes.includes(location.pathname) && <Header />}
             <Routes>
                 <Route path="/" element={<Landing />} />
@@ -48,5 +54,6 @@ const AppWrapper = () => (
         <App />
     </Router>
 );
+
 
 export default AppWrapper;

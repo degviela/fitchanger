@@ -6,9 +6,9 @@ import SavedOutfitsScreen from './SavedOutfitsScreen';
 import MainSection from './MainProfileSection';
 import Sidebar from './ProfileSidebar';
 import Settings from './Settings';
-import FriendList from './FriendList';
 import AllClothesCatalog from './AllClothesCatalog'; // Import the new component
 import './ProfileScreen.css';
+import {toast} from "react-toastify";
 
 const ProfileScreen = () => {
     const [selectedSection, setSelectedSection] = useState('main');
@@ -60,7 +60,7 @@ const ProfileScreen = () => {
             navigate('/login'); // Redirect to login page after logout
         } catch (error) {
             console.error('Logout failed:', error);
-            alert('Logout failed. Please try again.');
+            toast.error('Logout failed. Please try again.');
         }
     };
 
@@ -79,9 +79,7 @@ const ProfileScreen = () => {
                     >
                         <div>
                             {selectedSection === 'main' && <MainSection user={user} />}
-                            {selectedSection === 'savedOutfits' && user && <SavedOutfitsScreen userId={user.id} />}
-                            {selectedSection === 'friends' && <FriendList friends={friends} onAddFriend={handleAddFriend} />}
-                            {selectedSection === 'settings' && <Settings />}
+                            {selectedSection === 'savedOutfits' && user && <SavedOutfitsScreen userId={user.id} />}{selectedSection === 'settings' && <Settings />}
                             {selectedSection === 'clothingCatalog' && <AllClothesCatalog />} {/* Add the new section */}
                             {!selectedSection && (
                                 <div>

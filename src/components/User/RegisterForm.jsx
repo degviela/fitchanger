@@ -68,13 +68,12 @@ const RegisterForm = () => {
     };
 
     return (
-        <div className="flex justify-center items-center w-full h-screen bg-gray-100">
-            <div className="flex w-[60%] h-[70%] rounded-2xl shadow-lg">
-                <div className="flex flex-col w-[50%] h-full items-center justify-center p-10 border-gray-300">
+        <div className="flex justify-center items-center w-full h-screen bg-gray-100 dark:bg-black dark:bg-opacity-10">
+            <div className="mt-8 flex flex-col md:flex-row w-full max-w-4xl h-auto md:h-[80%] rounded-2xl shadow-lg bg-white dark:bg-black dark:bg-opacity-10">
+                <div className="flex flex-col w-full md:w-[50%] h-full items-center justify-center p-10 border-gray-300">
                     <h1 className="text-3xl font-bold mb-6">Sign Up</h1>
 
                     <form onSubmit={handleSubmit} className="w-full">
-                        {/* First Name Input */}
                         <input
                             type="text"
                             name="firstName"
@@ -85,7 +84,6 @@ const RegisterForm = () => {
                         />
                         {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
 
-                        {/* Last Name Input */}
                         <input
                             type="text"
                             name="lastName"
@@ -96,7 +94,6 @@ const RegisterForm = () => {
                         />
                         {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
 
-                        {/* Username Input */}
                         <input
                             type="text"
                             name="username"
@@ -107,7 +104,6 @@ const RegisterForm = () => {
                         />
                         {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
 
-                        {/* Email Input */}
                         <input
                             type="email"
                             name="email"
@@ -118,7 +114,6 @@ const RegisterForm = () => {
                         />
                         {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
 
-                        {/* Password Input */}
                         <input
                             type="password"
                             name="password"
@@ -129,7 +124,6 @@ const RegisterForm = () => {
                         />
                         {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
 
-                        {/* Confirm Password Input */}
                         <input
                             type="password"
                             name="password_confirmation"
@@ -140,7 +134,6 @@ const RegisterForm = () => {
                         />
                         {errors.password_confirmation && <p className="text-red-500 text-sm">{errors.password_confirmation}</p>}
 
-                        {/* Agree to Terms and Conditions */}
                         <div className="flex items-center mb-6">
                             <input type="checkbox" className="mr-2" />
                             <label className="text-sm">
@@ -148,7 +141,6 @@ const RegisterForm = () => {
                             </label>
                         </div>
 
-                        {/* Register Button */}
                         <button type="submit" className="w-full p-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition duration-300">
                             Register
                         </button>
@@ -162,7 +154,7 @@ const RegisterForm = () => {
                     </div>
                 </div>
 
-                <div className="flex items-center justify-center w-[50%] h-full p-10 bg-gray-50 rounded-2xl">
+                <div className="hidden md:flex items-center justify-center w-full md:w-[50%] h-full p-10 bg-gray-50 rounded-2xl dark:bg-gray-900">
                     <img
                         src="/images/fitchangerlogo3.png"
                         alt="FitChanger Logo"
