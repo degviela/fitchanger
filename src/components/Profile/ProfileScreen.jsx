@@ -6,7 +6,6 @@ import SavedOutfitsScreen from './SavedOutfitsScreen';
 import MainSection from './MainProfileSection';
 import Sidebar from './ProfileSidebar';
 import Settings from './Settings';
-import AllClothesCatalog from './AllClothesCatalog'; // Import the new component
 import './ProfileScreen.css';
 import {toast} from "react-toastify";
 
@@ -18,7 +17,9 @@ const ProfileScreen = () => {
     ]);
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
+    const nodeRef = React.useRef(null);
 
+    const AUTH_URL = process.env.REACT_APP_AUTH_URL;
     const API_URL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
@@ -31,6 +32,7 @@ const ProfileScreen = () => {
                     withCredentials: true // Ensure cookies are sent with the request
                 });
                 setUser(response.data);
+                console.log('Logged-in user:', response.data); // Log the user data
             } catch (error) {
                 console.error('Failed to fetch user data:', error);
             }
@@ -50,8 +52,8 @@ const ProfileScreen = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.get(`${API_URL}/sanctum/csrf-cookie`);
-            await axios.post(`${API_URL}/logout`, {}, {
+            await axios.get(`${AUTH_URL}/sanctum/csrf-cookie`);
+            await axios.post(`${AUTH_URL}/logout`, {}, {
                 headers: {
                     'Accept':'application/json',
                 },
@@ -78,9 +80,21 @@ const ProfileScreen = () => {
                         classNames="fade"
                     >
                         <div>
-                            {selectedSection === 'main' && <MainSection user={user} />}
-                            {selectedSection === 'savedOutfits' && user && <SavedOutfitsScreen userId={user.id} />}{selectedSection === 'settings' && <Settings />}
-                            {selectedSection === 'clothingCatalog' && <AllClothesCatalog />} {/* Add the new section */}
+                            {
+                                selectedSection === 'main' && user &&
+                                <MainSection user={user.user} onUsernameUpdate={(newUsername) =>
+                                {
+                                setUser(prev => ({
+                                    ...prev,
+                                    user: {
+                                        ...prev.user,
+                                        username: newUsername
+                                    }
+                                    }));
+                            }} />
+                            }
+                            {selectedSection === 'savedOutfits' && user && <SavedOutfitsScreen userId={user.user.id} />}
+                            {selectedSection === 'settings' && <Settings />}
                             {!selectedSection && (
                                 <div>
                                     <h2 className="text-xl text-gray-500">Select a menu option</h2>

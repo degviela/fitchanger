@@ -54,7 +54,7 @@ const RegisterForm = () => {
             console.log(registerResponse); // Log the response
 
             if (registerResponse.status === 204) {
-                navigate('/login');
+                // navigate('/login');
             } else {
                 setErrors({ general: 'Registration failed. Please try again.' });
             }

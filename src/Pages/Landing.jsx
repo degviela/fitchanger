@@ -2,7 +2,7 @@ import React from 'react';
 import LandingPageFirstScreen from "../components/Landing/LandingPageFirstScreen";
 import LandingPageSecondScreen from "../components/Landing/LandingPageSecondScreen";
 import LandingPageThirdScreen from "../components/Landing/LandingPageThirdScreen";
-import LandingPageFourthScreen from "../components/Landing/LandingPageFourthScreen";
+import LandingFooter from "../components/Landing/LandingFooter";
 
 const Landing = () => {
     return (
@@ -10,7 +10,7 @@ const Landing = () => {
             <LandingPageFirstScreen />
             <LandingPageSecondScreen />
             <LandingPageThirdScreen />
-            <LandingPageFourthScreen />
+            <LandingFooter />
         </div>
     );
 };

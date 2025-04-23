@@ -1,79 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const UserProfile = () => {
-    const { id } = useParams(); // Get user ID from URL
-    const [user, setUser] = useState(null);
+const FeaturedOutfits = ({ userId }) => {
+    const [featuredOutfits, setFeaturedOutfits] = useState([]);
     const [clothingItems, setClothingItems] = useState({});
-    const [loading, setLoading] = useState(true);
 
     const API_URL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
-        const fetchUserData = async () => {
+        const fetchFeaturedOutfits = async () => {
             try {
-                const response = await axios.get(`${API_URL}/users/${id}`);
-                const userData = response.data;
-                setUser(userData);
-
+                const response = await axios.get(`${API_URL}/outfits/user/${userId}`);
+                setFeaturedOutfits(response.data);
                 const clothingIds = new Set();
-                userData.outfits.forEach(outfit => {
-                    if (outfit.head_id) clothingIds.add(outfit.head_id);
-                    if (outfit.top_id) clothingIds.add(outfit.top_id);
-                    if (outfit.bottom_id) clothingIds.add(outfit.bottom_id);
-                    if (outfit.footwear_id) clothingIds.add(outfit.footwear_id);
+                response.data.forEach(outfit => {
+                    clothingIds.add(outfit.head_id);
+                    clothingIds.add(outfit.top_id);
+                    clothingIds.add(outfit.bottom_id);
+                    clothingIds.add(outfit.footwear_id);
                 });
-
                 await fetchClothingItems([...clothingIds]);
             } catch (error) {
-                console.error("Failed to fetch user:", error);
-            } finally {
-                setLoading(false);
+                console.error('Failed to fetch featured outfits:', error);
             }
         };
 
         const fetchClothingItems = async (ids) => {
             try {
                 const items = {};
-                await Promise.all(
-                    ids.map(async (id) => {
-                        const res = await axios.get(`${API_URL}/clothingitems/${id}`);
-                        items[id] = res.data;
-                    })
-                );
+                const responses = await Promise.all(ids.map(id => axios.get(`${API_URL}/clothingitems/${id}`)));
+                responses.forEach(response => {
+                    items[response.data.id] = response.data;
+                });
                 setClothingItems(items);
             } catch (error) {
                 console.error('Failed to fetch clothing items:', error);
             }
         };
 
-        fetchUserData();
-    }, [id]);
+        fetchFeaturedOutfits();
+    }, [userId]);
 
-    const getImageUrl = (imagePath) => `http://localhost/storage/${imagePath}`;
-
-    if (loading) return <div className="p-8 text-xl">Loading...</div>;
-    if (!user) return <div className="p-8 text-xl text-gray-500">User not found.</div>;
+    const getImageUrl = (imagePath) => {
+        return `http://localhost/storage/${imagePath}`;
+    };
 
     return (
-        <div className="flex flex-col items-center w-full h-full bg-gray-100 p-5 mt-[6%]">
-            <img
-                src={user.profilePicture || 'https://via.placeholder.com/150'}
-                alt={`${user.username}'s profile`}
-                className="w-32 h-32 rounded-full object-cover mb-4"
-            />
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">{user.username}</h2>
-            <p className="text-lg text-gray-600 mb-6">
-                Saved Outfits: {user.outfits.length}
-            </p>
+        <div className="w-full flex flex-col px-8 pt-8">
+            {/* Static Header */}
+            <h2 className="text-4xl font-bold mb-4">Featured Outfits</h2>
 
-            {user.outfits.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-7xl">
-                    {user.outfits.map((outfit) => (
+            {/* Scrollable Content */}
+            <div className="overflow-y-auto max-h-[calc(100vh-370px)] pr-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {featuredOutfits.map(outfit => (
                         <div
                             key={outfit.id}
-                            className="relative bg-white rounded-lg p-4 shadow-md group"
+                            className="dark:bg-black dark:bg-opacity-20 bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition duration-300 min-w-[370px]"
                         >
                             <h3 className="text-xl font-semibold mb-2">{outfit.name}</h3>
                             <div className="grid grid-cols-2 grid-rows-2 gap-2">
@@ -109,11 +92,9 @@ const UserProfile = () => {
                         </div>
                     ))}
                 </div>
-            ) : (
-                <p className="text-gray-500">No outfits to show.</p>
-            )}
+            </div>
         </div>
     );
 };
 
-export default UserProfile;
+export default FeaturedOutfits;

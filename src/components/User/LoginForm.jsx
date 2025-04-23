@@ -52,7 +52,7 @@ const LoginForm = () => {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             placeholder="Username"
-                            className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:placeholder-transparent focus:ring-orange-500"
                         />
 
                         <input
@@ -60,7 +60,7 @@ const LoginForm = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Password"
-                            className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:placeholder-transparent focus:ring-orange-500"
                         />
 
                         {error && <p className="text-red-500 mb-4">{error}</p>}

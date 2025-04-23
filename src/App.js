@@ -11,6 +11,7 @@ import User from "./Pages/User";
 import axios from "axios";
 import { ThemeContext } from './components/Utilities/ThemeContext';
 import OutfitMaker from "./Pages/OutfitMaker";
+import ProtectedRoute from "./components/Utilities/ProtectedRoute";
 import {ToastContainer} from "react-toastify";
 
 function App() {
@@ -42,8 +43,8 @@ function App() {
                 <Route path="/user/:id" element={<User />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/demo" element={<Stickman />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/OutfitMaker" element={<OutfitMaker />} />
+                <Route path="/profile" element ={<ProtectedRoute element ={<Profile />} />}/>
+                <Route path="/OutfitMaker" element={<ProtectedRoute element ={<OutfitMaker />} />} />
             </Routes>
         </div>
     );

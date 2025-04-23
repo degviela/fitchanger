@@ -1,11 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileSidebar = ({ handleSectionChange, handleLogout }) => {
+    const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
+
+    const handleSearch = () => {
+        if (searchQuery.trim()) {
+            navigate(`/search?query=${encodeURIComponent(searchQuery.trim())}`);
+        }
+    };
+
     return (
         <div className="w-[20%] h-screen bg-gray-300 flex flex-col items-center p-5 dark:bg-gray-900 dark:text-gray-">
             <h2 className="text-2xl dark:text-white font-bold mb-6">Profile</h2>
 
+            {/* Search Section */}
+            <div className="w-full mb-6 flex items-center">
+                <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search..."
+                    className="flex-grow p-2 rounded-l-lg border border-gray-400 dark:bg-gray-800 dark:text-white"
+                />
+                <button
+                    onClick={handleSearch}
+                    className="p-3 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 transition duration-300"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="w-5 h-5"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15.75 15.75L19.5 19.5M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"
+                        />
+                    </svg>
+                </button>
+            </div>
             <ul className="space-y-4 w-full">
                 <li>
                     <button
