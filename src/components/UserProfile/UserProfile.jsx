@@ -59,7 +59,7 @@ const UserProfile = () => {
     return (
         <div className="flex flex-col items-center w-full h-full bg-gray-100 p-5 mt-[6%]">
             <img
-                src={user.profilePicture || 'https://via.placeholder.com/150'}
+                src={user.profilePicture || '/images/defaultprofilepic.jpg'}
                 alt={`${user.username}'s profile`}
                 className="w-32 h-32 rounded-full object-cover mb-4"
             />

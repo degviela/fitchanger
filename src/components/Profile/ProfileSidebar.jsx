@@ -22,12 +22,12 @@ const ProfileSidebar = ({ handleSectionChange, handleLogout }) => {
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search..."
+                    placeholder="Search for an user..."
                     className="flex-grow p-2 rounded-l-lg border border-gray-400 dark:bg-gray-800 dark:text-white"
                 />
                 <button
                     onClick={handleSearch}
-                    className="p-3 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 transition duration-300"
+                    className="p-3 bg-orange-500 text-white rounded-r-lg hover:bg-blue-600 transition duration-300"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ const ProfileSidebar = ({ handleSectionChange, handleLogout }) => {
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 mr-4">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>
-                        Menu
+                        Main
                     </button>
                 </li>
                 <li>
@@ -70,6 +70,20 @@ const ProfileSidebar = ({ handleSectionChange, handleLogout }) => {
                 </li>
                 <li>
                     <Link
+                        to="/clothingitems"
+                    >
+                    <button
+                        className="flex items-center w-full p-2 rounded-lg text-black dark:text-white dark:hover:bg-slate-500 hover:bg-orange-500 hover:text-white transition duration-300 transform hover:scale-105"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0 1 12 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5" />
+                        </svg>
+                        All Clothing Items
+                    </button>
+                </Link>
+                </li>
+                <li>
+                    <Link
                         to="/OutfitMaker"
                         onClick={() => handleSectionChange('createOutfit')}
                         className="flex items-center w-full p-2 rounded-lg text-black dark:text-white dark:hover:bg-slate-500 hover:bg-orange-500 hover:text-white transition duration-300 transform hover:scale-105"
@@ -78,6 +92,17 @@ const ProfileSidebar = ({ handleSectionChange, handleLogout }) => {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
                         Create an Outfit
+                    </Link>
+                </li>
+                <li>
+                    <Link
+                        to="/add-clothing-item"
+                        className="flex items-center w-full p-2 rounded-lg text-black dark:text-white dark:hover:bg-slate-500 hover:bg-orange-500 hover:text-white transition duration-300 transform hover:scale-105"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 mr-4">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        Add Clothing Item
                     </Link>
                 </li>
                 <li>

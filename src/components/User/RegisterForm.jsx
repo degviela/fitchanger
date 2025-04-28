@@ -51,10 +51,8 @@ const RegisterForm = () => {
 
             const registerResponse = await axios.post(`${AUTH_URL}/register`, formData, { withCredentials: true });
 
-            console.log(registerResponse); // Log the response
-
             if (registerResponse.status === 204) {
-                // navigate('/login');
+                navigate('/login');
             } else {
                 setErrors({ general: 'Registration failed. Please try again.' });
             }
@@ -80,9 +78,9 @@ const RegisterForm = () => {
                             placeholder="First Name"
                             value={formData.firstName}
                             onChange={handleChange}
-                            className={`w-full p-3 mb-4 border ${errors.firstName ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500`}
+                            className={`w-full p-3 mb-3 border ${errors.firstName ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:text-black`}
                         />
-                        {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
+                        {errors.firstName && <div className="text-red-500 text-xs mt-[-4px] mb-4">{errors.firstName}</div>}
 
                         <input
                             type="text"
@@ -90,9 +88,9 @@ const RegisterForm = () => {
                             placeholder="Last Name"
                             value={formData.lastName}
                             onChange={handleChange}
-                            className={`w-full p-3 mb-4 border ${errors.lastName ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500`}
+                            className={`w-full p-3 mb-3 border ${errors.lastName ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:text-black`}
                         />
-                        {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
+                        {errors.lastName && <div className="text-red-500 text-xs mt-[-4px] mb-4">{errors.lastName}</div>}
 
                         <input
                             type="text"
@@ -100,9 +98,9 @@ const RegisterForm = () => {
                             placeholder="Username"
                             value={formData.username}
                             onChange={handleChange}
-                            className={`w-full p-3 mb-4 border ${errors.username ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500`}
+                            className={`w-full p-3 mb-3 border ${errors.username ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:text-black`}
                         />
-                        {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
+                        {errors.username && <div className="text-red-500 text-xs mt-[-4px] mb-4">{errors.username}</div>}
 
                         <input
                             type="email"
@@ -110,9 +108,9 @@ const RegisterForm = () => {
                             placeholder="Email"
                             value={formData.email}
                             onChange={handleChange}
-                            className={`w-full p-3 mb-4 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500`}
+                            className={`w-full p-3 mb-3 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:text-black`}
                         />
-                        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+                        {errors.email && <div className="text-red-500 text-xs mt-[-4px] mb-4">{errors.email}</div>}
 
                         <input
                             type="password"
@@ -120,9 +118,9 @@ const RegisterForm = () => {
                             placeholder="Password"
                             value={formData.password}
                             onChange={handleChange}
-                            className={`w-full p-3 mb-4 border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500`}
+                            className={`w-full p-3 mb-3 border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:text-black`}
                         />
-                        {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+                        {errors.password && <div className="text-red-500 text-xs mt-[-4px] mb-4">{errors.password}</div>}
 
                         <input
                             type="password"
@@ -130,9 +128,9 @@ const RegisterForm = () => {
                             placeholder="Confirm Password"
                             value={formData.password_confirmation}
                             onChange={handleChange}
-                            className={`w-full p-3 mb-4 border ${errors.password_confirmation ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500`}
+                            className={`w-full p-3 mb-3 border ${errors.password_confirmation ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:text-black`}
                         />
-                        {errors.password_confirmation && <p className="text-red-500 text-sm">{errors.password_confirmation}</p>}
+                        {errors.password_confirmation && <div className="text-red-500 text-xs mt-[-4px] mb-4">{errors.password_confirmation}</div>}
 
                         <div className="flex items-center mb-6">
                             <input type="checkbox" className="mr-2" />
@@ -146,7 +144,7 @@ const RegisterForm = () => {
                         </button>
                     </form>
 
-                    {errors.general && <p className="text-red-500 text-sm mt-4">{errors.general}</p>}
+                    {errors.general && <div className="text-red-500 text-sm mt-4">{errors.general}</div>}
 
                     <div className="mt-6 text-gray-500">
                         Already have an account?

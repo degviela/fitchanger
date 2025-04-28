@@ -16,7 +16,6 @@ const LoginForm = () => {
         try {
             // Fetch the CSRF token first
             await axios.get(`${AUTH_URL}/sanctum/csrf-cookie`, { withCredentials: true });
-
             // Then make the login request
             const response = await axios.post(
                 `${AUTH_URL}/login`,
@@ -24,15 +23,13 @@ const LoginForm = () => {
                 { withCredentials: true }
             );
 
-            console.log(response); // Log the response
-
             if (response.status === 204 || response.status === 200) {
                 navigate('/profile');
             } else {
                 setError('Login failed. Please try again.');
             }
         } catch (err) {
-            if (err.response && err.response.status === 401) {
+            if (err.response && err.response.status === 422) {
                 setError('Invalid username or password');
             } else {
                 setError('An error occurred. Please try again.');
@@ -52,7 +49,7 @@ const LoginForm = () => {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             placeholder="Username"
-                            className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:placeholder-transparent focus:ring-orange-500"
+                            className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:placeholder-transparent focus:ring-orange-500 dark:text-black"
                         />
 
                         <input
@@ -60,7 +57,7 @@ const LoginForm = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Password"
-                            className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:placeholder-transparent focus:ring-orange-500"
+                            className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:placeholder-transparent focus:ring-orange-500 dark:text-black"
                         />
 
                         {error && <p className="text-red-500 mb-4">{error}</p>}

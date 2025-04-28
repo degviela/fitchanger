@@ -14,21 +14,21 @@ import React, { useContext, useState } from 'react';
     const [message, setMessage] = useState('');
     const API_URL = process.env.REACT_APP_API_URL;
 
-    const handlePasswordReset = async () => {
-      if (!email) {
-        toast.error('Please enter your email.');
-        return;
-      }
-
-      try {
-        const response = await axios.post(`${API_URL}/password/reset`, { email });
-        setMessage('Password reset link sent to your email.');
-        toast.success('Password reset link sent to your email.');
-      } catch (error) {
-        setMessage('Failed to send password reset link.');
-        toast.error('Failed to send password reset link.');
-      }
-    };
+    // const handlePasswordReset = async () => {
+    //   if (!email) {
+    //     toast.error('Please enter your email.');
+    //     return;
+    //   }
+    //
+    //   try {
+    //     const response = await axios.post(`${API_URL}/password/reset`, { email });
+    //     setMessage('Password reset link sent to your email.');
+    //     toast.success('Password reset link sent to your email.');
+    //   } catch (error) {
+    //     setMessage('Failed to send password reset link.');
+    //     toast.error('Failed to send password reset link.');
+    //   }
+    // };
 
     const handleNameChange = async () => {
       if (!firstName || !lastName) {
@@ -80,12 +80,6 @@ import React, { useContext, useState } from 'react';
           <div className="w-full md:w-1/2 p-4">
             <h2 className="text-2xl font-bold mb-4">Account Settings</h2>
             <button
-              onClick={togglePasswordModal}
-              className="w-full p-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition duration-300 mb-4"
-            >
-              Reset Password
-            </button>
-            <button
               onClick={toggleNameModal}
               className="w-full p-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300"
             >
@@ -94,67 +88,41 @@ import React, { useContext, useState } from 'react';
           </div>
         </div>
 
-        {isPasswordModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-lg">
-              <h2 className="text-2xl font-bold mb-4">Password Reset</h2>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-              />
-              <button
-                onClick={handlePasswordReset}
-                className="w-full p-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition duration-300"
-              >
-                Send Reset Link
-              </button>
-              <button
-                onClick={togglePasswordModal}
-                className="w-full p-3 mt-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition duration-300"
-              >
-                Close
-              </button>
-              {message && <p className="mt-4 text-sm text-gray-500">{message}</p>}
-            </div>
-          </div>
-        )}
-
         {isNameModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-lg">
-              <h2 className="text-2xl font-bold mb-4">Change Name</h2>
-              <input
-                type="text"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                placeholder="Enter your first name"
-                className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              />
-              <input
-                type="text"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                placeholder="Enter your last name"
-                className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              />
-              <button
-                onClick={handleNameChange}
-                className="w-full p-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300"
-              >
-                Change Name
-              </button>
-              <button
-                onClick={toggleNameModal}
-                className="w-full p-3 mt-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition duration-300 underline"
-              >
-                Close
-              </button>
-              {message && <p className="mt-4 text-sm text-gray-500">{message}</p>}
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-2xl w-[90%] max-w-md text-center relative">
+                <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Change Your Name</h2>
+                <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="First Name"
+                    className="w-full mb-3 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-gray-50 dark:bg-zinc-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+                <input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    placeholder="Last Name"
+                    className="w-full mb-4 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-gray-50 dark:bg-zinc-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+                <div className="flex justify-between gap-4">
+                  <button
+                      onClick={handleNameChange}
+                      className="flex-1 py-2 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition"
+                  >
+                    Save
+                  </button>
+                  <button
+                      onClick={toggleNameModal}
+                      className="flex-1 py-2 rounded-xl bg-gray-400 text-white font-semibold hover:bg-gray-500 transition"
+                  >
+                    Cancel
+                  </button>
+                </div>
+                {message && <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">{message}</p>}
+              </div>
             </div>
-          </div>
         )}
       </div>
     );
