@@ -16,6 +16,7 @@ import {ToastContainer} from "react-toastify";
 import AddClothingItem from "./components/Profile/AddClothingItem";
 import ClothingItemsPage from "./components/Profile/ClothingItems";
 import AddingTutorial from "./components/Profile/AddingTutorial";
+import EditOutfitScreen from "./components/Profile/EditOutfitScreen";
 
 function App() {
     useEffect(() => {
@@ -42,8 +43,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<Landing />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/user/:id" element={<User />} />
+                <Route path="/search" element={<ProtectedRoute element={<Search />} />} />
+                <Route path="/user/:id" element={<ProtectedRoute element={<User />} />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/demo" element={<Stickman />} />
                 <Route path="/adding-tutorial" element={<AddingTutorial />} />
@@ -51,6 +52,7 @@ function App() {
                 <Route path="/add-clothing-item" element ={<ProtectedRoute element ={<AddClothingItem />} />}/>
                 <Route path="/OutfitMaker" element={<ProtectedRoute element ={<OutfitMaker />} />} />
                 <Route path="/clothingitems" element={<ProtectedRoute element={<ClothingItemsPage />} />} />
+                <Route path="/edit-outfit/:id" element={<ProtectedRoute element={<EditOutfitScreen />} />} />
 
             </Routes>
         </div>

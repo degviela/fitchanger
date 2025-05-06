@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const SavedOutfitsScreen = ({ userId }) => {
     const [savedOutfits, setSavedOutfits] = useState([]);
     const [clothingItems, setClothingItems] = useState({});
-    const [outfitToDelete, setOutfitToDelete] = useState(null); // Confirmation state
+    const [outfitToDelete, setOutfitToDelete] = useState(null);
+    const navigate = useNavigate();
 
     const API_URL = process.env.REACT_APP_API_URL;
 
@@ -83,7 +85,7 @@ const SavedOutfitsScreen = ({ userId }) => {
                         <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
                         <div className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-x-4">
                             <button
-                                onClick={() => console.log(`Edit outfit ${outfit.id}`)}
+                                onClick={() => navigate(`/edit-outfit/${outfit.id}`)}
                                 className="w-12 h-12 border border-white rounded-md flex justify-center items-center hover:bg-blue-600 transition"
                             >
                                 <svg

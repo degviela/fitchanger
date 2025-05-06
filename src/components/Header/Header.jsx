@@ -90,14 +90,14 @@ const Header = () => {
                                     <HeaderButton
                                         to="/login"
                                         onClick={() => setShowButtons(false)}
-                                        color="bg-orange-500 text-white hover:bg-orange-600 max-w-[100px]"
+                                        color="bg-orange-500 text-white hover:bg-orange-600 max-w-[95px]"
                                     >
                                         Login
                                     </HeaderButton>
                                     <HeaderButton
                                         to="/register"
                                         onClick={() => setShowButtons(false)}
-                                        color="bg-black text-white hover:bg-gray-800 max-w-[100px]"
+                                        color="bg-black text-white hover:bg-gray-800 max-w-[95px]"
                                     >
                                         Sign Up
                                     </HeaderButton>

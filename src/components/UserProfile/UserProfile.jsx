@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const UserProfile = () => {
-    const { id } = useParams(); // Get user ID from URL
+    const { id } = useParams();
     const [user, setUser] = useState(null);
     const [clothingItems, setClothingItems] = useState({});
     const [loading, setLoading] = useState(true);
@@ -53,18 +53,31 @@ const UserProfile = () => {
 
     const getImageUrl = (imagePath) => `http://localhost/storage/${imagePath}`;
 
-    if (loading) return <div className="p-8 text-xl">Loading...</div>;
-    if (!user) return <div className="p-8 text-xl text-gray-500">User not found.</div>;
+    if (loading)
+        return (
+            <div className="p-8 text-xl text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900 min-h-screen">
+                Loading...
+            </div>
+        );
+
+    if (!user)
+        return (
+            <div className="p-8 text-xl text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-900 min-h-screen">
+                User not found.
+            </div>
+        );
 
     return (
-        <div className="flex flex-col items-center w-full h-full bg-gray-100 p-5 mt-[6%]">
+        <div className="flex flex-col items-center w-full min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300 p-5 mt-[6%]">
             <img
                 src={user.profilePicture || '/images/defaultprofilepic.jpg'}
                 alt={`${user.username}'s profile`}
                 className="w-32 h-32 rounded-full object-cover mb-4"
             />
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">{user.username}</h2>
-            <p className="text-lg text-gray-600 mb-6">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+                {user.username}
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
                 Saved Outfits: {user.outfits.length}
             </p>
 
@@ -73,9 +86,11 @@ const UserProfile = () => {
                     {user.outfits.map((outfit) => (
                         <div
                             key={outfit.id}
-                            className="relative bg-white rounded-lg p-4 shadow-md group"
+                            className="relative bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md group"
                         >
-                            <h3 className="text-xl font-semibold mb-2">{outfit.name}</h3>
+                            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+                                {outfit.name}
+                            </h3>
                             <div className="grid grid-cols-2 grid-rows-2 gap-2">
                                 {clothingItems[outfit.head_id] && (
                                     <img
@@ -110,7 +125,7 @@ const UserProfile = () => {
                     ))}
                 </div>
             ) : (
-                <p className="text-gray-500">No outfits to show.</p>
+                <p className="text-gray-500 dark:text-gray-400">No outfits to show.</p>
             )}
         </div>
     );
