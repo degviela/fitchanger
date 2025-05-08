@@ -9,6 +9,7 @@ const UserProfile = () => {
     const [loading, setLoading] = useState(true);
 
     const API_URL = process.env.REACT_APP_API_URL;
+    const AUTH_URL = process.env.REACT_APP_AUTH_URL;
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -51,7 +52,10 @@ const UserProfile = () => {
         fetchUserData();
     }, [id]);
 
-    const getImageUrl = (imagePath) => `http://localhost/storage/${imagePath}`;
+    const getImageUrl = (imagePath) => {
+        // Construct the full image URL for user profile or clothing items
+        return `${AUTH_URL}/storage/${imagePath}`;
+    };
 
     if (loading)
         return (
@@ -70,7 +74,7 @@ const UserProfile = () => {
     return (
         <div className="flex flex-col items-center w-full min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300 p-5 mt-[6%]">
             <img
-                src={user.profilePicture || '/images/defaultprofilepic.jpg'}
+                src={getImageUrl(user.profile_picture) || '/images/defaultprofilepic.jpg'}
                 alt={`${user.username}'s profile`}
                 className="w-32 h-32 rounded-full object-cover mb-4"
             />

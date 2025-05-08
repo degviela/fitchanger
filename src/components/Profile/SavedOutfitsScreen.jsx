@@ -9,6 +9,7 @@ const SavedOutfitsScreen = ({ userId }) => {
     const navigate = useNavigate();
 
     const API_URL = process.env.REACT_APP_API_URL;
+    const AUTH_URL = process.env.REACT_APP_AUTH_URL;
 
     useEffect(() => {
         const fetchSavedOutfits = async () => {
@@ -45,7 +46,7 @@ const SavedOutfitsScreen = ({ userId }) => {
     }, [userId]);
 
     const getImageUrl = (imagePath) => {
-        return `http://localhost/storage/${imagePath}`;
+        return `${AUTH_URL}/storage/${imagePath}`;
     };
 
     const handleDelete = async (outfitId) => {

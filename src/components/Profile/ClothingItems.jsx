@@ -24,7 +24,7 @@ const ClothingItemsPage = () => {
     }, [API_URL]);
 
     const getImageUrl = (imagePath) => {
-        return `http://localhost/storage/${imagePath}`;
+        return `${AUTH_URL}/storage/${imagePath}`;
     };
 
     return (

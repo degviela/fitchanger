@@ -35,7 +35,7 @@ const EditOutfitScreen = () => {
     const navigate = useNavigate();
 
     const getImageUrl = (path) => {
-        return `http://localhost/storage/${path}`;
+        return `${AUTH_URL}/storage/${path}`;
     };
 
     useEffect(() => {
@@ -119,13 +119,14 @@ const EditOutfitScreen = () => {
     };
 
     return (
-        <div className="w-screen h-[80%] bg-white flex flex-row justify-center items-center dark:bg-gray-900">
-            <div className="absolute top-4 left-4">
+        <div className="w-screen min-h-screen bg-white flex flex-col lg:flex-row justify-center items-center dark:bg-gray-900 overflow-x-hidden">
+            <div className="absolute top-4 left-4 z-10">
                 <BackButton to="/profile" />
             </div>
 
-            <div className="w-[50%] h-screen flex flex-col justify-center items-center">
-                <div className="mb-4 flex space-x-4">
+            {/* Left Side: Avatar Preview */}
+            <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-4 mt-10 md:mt-2">
+                <div className="mb-4 flex flex-wrap gap-2 justify-center">
                     {skinTones.map((tone) => (
                         <button
                             key={tone.name}
@@ -137,21 +138,22 @@ const EditOutfitScreen = () => {
                     ))}
                 </div>
 
-                <div className="w-[40%] h-[70%] relative flex flex-col justify-center items-center">
+                {/* Character Preview */}
+                <div className="w-[300px] h-auto relative flex flex-col justify-center items-center">
                     {/* Head */}
-                    <div className="w-full h-[20%] flex justify-center items-end relative">
+                    <div className="w-full flex justify-center items-end relative">
                         <div id="head" className="w-[140px] h-[140px] rounded-full" style={{ backgroundColor: skinColor }}></div>
                         {selectedClothes.head && (
                             <img
                                 src={getImageUrl(selectedClothes.head.image_path)}
                                 alt="Headwear"
-                                className="absolute top-[-40px] w-[160px] h-[90px]"
+                                className="absolute top-[-20px] w-[160px] h-[90px]"
                             />
                         )}
                     </div>
 
                     {/* Torso */}
-                    <div className="w-full h-[30%] flex justify-center items-start relative">
+                    <div className="w-full flex justify-center items-start relative">
                         <div id="leftarm" className="w-[50px] h-[200px]" style={{ backgroundColor: skinColor }}></div>
                         <div id="torso" className="w-[150px] h-[200px]" style={{ backgroundColor: skinColor }}></div>
                         <div id="rightarm" className="w-[50px] h-[200px]" style={{ backgroundColor: skinColor }}></div>
@@ -159,13 +161,13 @@ const EditOutfitScreen = () => {
                             <img
                                 src={getImageUrl(selectedClothes.top.image_path)}
                                 alt="Top"
-                                className="absolute top-[0] w-[250px] h-[200px]"
+                                className="absolute top-0 w-[250px] h-[200px]"
                             />
                         )}
                     </div>
 
                     {/* Legs */}
-                    <div className="w-full h-[25%] flex justify-center items-start relative">
+                    <div className="w-full flex justify-center items-start relative">
                         <div className="h-full w-[150px] flex">
                             <div id="leftleg" className="h-[150px] w-[75px]" style={{ backgroundColor: skinColor }}></div>
                             <div id="rightleg" className="h-[150px] w-[75px]" style={{ backgroundColor: skinColor }}></div>
@@ -174,13 +176,13 @@ const EditOutfitScreen = () => {
                             <img
                                 src={getImageUrl(selectedClothes.bottom.image_path)}
                                 alt="Bottom"
-                                className="absolute top-[0] w-[150px] h-[150px]"
+                                className="absolute top-0 w-[150px] h-[150px]"
                             />
                         )}
                     </div>
 
                     {/* Feet */}
-                    <div className="w-full h-[5%] flex justify-center items-end relative">
+                    <div className="w-full flex justify-center items-end relative mt-2">
                         <div className="h-[20px] w-[150px]" style={{ backgroundColor: skinColor }}></div>
                         {selectedClothes.footwear && (
                             <img
@@ -193,10 +195,10 @@ const EditOutfitScreen = () => {
                 </div>
             </div>
 
-            {/* Right side clothing selection */}
-            <div className="w-[50%] h-screen flex flex-col justify-center items-center">
-                <div className="w-[70%] h-[80%] rounded-2xl shadow-lg bg-white dark:bg-black dark:bg-opacity-10">
-                    <div className="w-full h-[10%] border-black flex justify-center items-center">
+            {/* Right Side: Form */}
+            <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-4">
+                <div className="w-full max-w-[600px] rounded-2xl shadow-lg bg-white dark:bg-black dark:bg-opacity-10">
+                    <div className="w-full border-b border-black flex justify-center items-center py-4">
                         <h1 className="font-bold text-3xl">Edit Outfit</h1>
                     </div>
                     <div className="p-4">
@@ -208,63 +210,28 @@ const EditOutfitScreen = () => {
                             className="mb-4 p-2 border rounded w-full dark:text-black dark:bg-gray-200 dark:border-black focus:outline-none focus:placeholder-transparent"
                         />
 
-                        {/* Head */}
-                        <h2 className="font-semibold">Head:</h2>
-                        <div className="flex space-x-4 mb-4">
-                            {clothesOptions.head.map((item) => (
-                                <button
-                                    key={item.name}
-                                    onClick={() => handleClothingSelect('head', item)}
-                                    className={`p-2 rounded ${selectedClothes.head === item ? 'bg-blue-500 dark:bg-green-400 text-white dark:text-black' : 'bg-gray-200 dark:text-black'}`}
-                                >
-                                    {item.name}
-                                </button>
-                            ))}
-                        </div>
+                        {/* Clothing Pickers */}
+                        {['head', 'top', 'bottom', 'footwear'].map((part) => (
+                            <div key={part}>
+                                <h2 className="font-semibold capitalize">{part}:</h2>
+                                <div className="flex flex-wrap gap-2 mb-4">
+                                    {clothesOptions[part].map((item) => (
+                                        <button
+                                            key={item.id}
+                                            onClick={() => handleClothingSelect(part, item)}
+                                            className={`p-2 rounded ${
+                                                selectedClothes[part] === item
+                                                    ? 'bg-blue-500 dark:bg-green-400 text-white dark:text-black'
+                                                    : 'bg-gray-200 dark:text-black'
+                                            }`}
+                                        >
+                                            {item.name}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
 
-                        {/* Top */}
-                        <h2 className="font-semibold">Top:</h2>
-                        <div className="flex space-x-4 mb-4">
-                            {clothesOptions.top.map((item) => (
-                                <button
-                                    key={item.name}
-                                    onClick={() => handleClothingSelect('top', item)}
-                                    className={`p-2 rounded ${selectedClothes.top === item ? 'bg-blue-500 dark:bg-green-400 text-white dark:text-black' : 'bg-gray-200 dark:text-black'}`}
-                                >
-                                    {item.name}
-                                </button>
-                            ))}
-                        </div>
-
-                        {/* Bottom */}
-                        <h2 className="font-semibold">Bottom:</h2>
-                        <div className="flex space-x-4 mb-4">
-                            {clothesOptions.bottom.map((item) => (
-                                <button
-                                    key={item.name}
-                                    onClick={() => handleClothingSelect('bottom', item)}
-                                    className={`p-2 rounded ${selectedClothes.bottom === item ? 'bg-blue-500 dark:bg-green-400 text-white dark:text-black' : 'bg-gray-200 dark:text-black'}`}
-                                >
-                                    {item.name}
-                                </button>
-                            ))}
-                        </div>
-
-                        {/* Footwear */}
-                        <h2 className="font-semibold">Footwear:</h2>
-                        <div className="flex space-x-4 mb-4">
-                            {clothesOptions.footwear.map((item) => (
-                                <button
-                                    key={item.name}
-                                    onClick={() => handleClothingSelect('footwear', item)}
-                                    className={`p-2 rounded ${selectedClothes.footwear === item ? 'bg-blue-500 dark:bg-green-400 text-white dark:text-black' : 'bg-gray-200 dark:text-black'}`}
-                                >
-                                    {item.name}
-                                </button>
-                            ))}
-                        </div>
-
-                        {/* Save Button */}
                         <button
                             onClick={handleUpdateOutfit}
                             className="mt-4 p-2 bg-green-500 text-white rounded transition duration-300 ease-in-out transform hover:bg-green-600 hover:scale-105"

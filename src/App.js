@@ -25,7 +25,13 @@ function App() {
     });
 
     const location = useLocation();
-    const noHeaderRoutes = ['/profile', '/OutfitMaker', '/user/:id'];
+    const noHeaderRoutes = ['/profile', '/OutfitMaker', '/user/:id', '/edit-outfit/:id'];
+
+    const shouldHideHeader = noHeaderRoutes.some((route) =>
+        route.includes(':')
+            ? location.pathname.startsWith(route.split(':')[0]) // handles dynamic routes
+            : location.pathname === route
+    );
     const { theme } = useContext(ThemeContext);
 
     useEffect(() => {
@@ -39,7 +45,7 @@ function App() {
                 autoClose={3000}
                 theme="colored"
             />
-            {!noHeaderRoutes.includes(location.pathname) && <Header />}
+            {!shouldHideHeader && <Header />}
             <Routes>
                 <Route path="/" element={<Landing />} />
                 <Route path="/login" element={<Login />} />
