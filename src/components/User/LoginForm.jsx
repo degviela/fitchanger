@@ -14,9 +14,7 @@ const LoginForm = () => {
         e.preventDefault();
 
         try {
-            // Fetch the CSRF token first
             await axios.get(`${AUTH_URL}/sanctum/csrf-cookie`, { withCredentials: true });
-            // Then make the login request
             const response = await axios.post(
                 `${AUTH_URL}/login`,
                 { username, password },
@@ -38,9 +36,10 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="flex justify-center items-center w-full h-screen bg-gray-100 dark:bg-black dark:bg-opacity-10">
-            <div className="flex w-[60%] h-[70%] rounded-2xl shadow-lg dark:bg-black dark:bg-opacity-15 ">
-                <div className="flex flex-col w-[50%] h-full items-center justify-center p-10 border-gray-300">
+        <div className="flex justify-center items-center w-full h-screen bg-gray-100 dark:bg-black dark:bg-opacity-10 px-4">
+            <div className="flex flex-col md:flex-row w-full md:w-[60%] h-[70%] rounded-2xl shadow-lg overflow-hidden dark:bg-black dark:bg-opacity-15">
+                {/* Left: Form */}
+                <div className="w-full md:w-1/2 h-full flex flex-col items-center justify-center p-6 md:p-10 bg-white dark:bg-black dark:bg-opacity-20">
                     <h1 className="text-3xl font-bold mb-6">Log In</h1>
 
                     <form onSubmit={handleLogin} className="w-full">
@@ -73,7 +72,8 @@ const LoginForm = () => {
                     </div>
                 </div>
 
-                <div className="flex items-center justify-center w-[50%] h-full p-10 bg-gray-50 rounded-2xl dark:bg-gray-900">
+                {/* Right: Logo (Hidden on small screens) */}
+                <div className="hidden md:flex w-1/2 h-full items-center justify-center p-10 bg-gray-50 dark:bg-gray-900">
                     <img
                         src="/images/fitchangerlogo3.png"
                         alt="FitChanger Logo"
