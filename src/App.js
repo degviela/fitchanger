@@ -25,7 +25,7 @@ function App() {
     });
 
     const location = useLocation();
-    const noHeaderRoutes = ['/profile', '/OutfitMaker', '/user/:id', '/edit-outfit/:id'];
+    const noHeaderRoutes = ['/profile', '/OutfitMaker', '/user/:id', '/edit-outfit/:id', '/demo'];
 
     const shouldHideHeader = noHeaderRoutes.some((route) =>
         route.includes(':')

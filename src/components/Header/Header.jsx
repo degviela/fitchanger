@@ -73,7 +73,7 @@ const Header = () => {
                 </div>
 
                 {/* Burger Icon */}
-                <div className="md:hidden flex items-center">
+                <div className="md:hidden flex items-center z-10">
                     <button onClick={toggleMenu} className="text-black focus:outline-none">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
@@ -136,7 +136,7 @@ const Header = () => {
 
             {/* Mobile Menu */}
             {menuOpen && (
-                <div className="fixed top-0 left-0 w-full h-screen bg-white flex flex-col items-center justify-center z-40 md:hidden">
+                <div className="fixed top-0 left-0 w-full h-screen bg-white flex flex-col items-center justify-center z-40 md:hidden dark:bg-gray-900">
                     <button onClick={toggleMenu} className="absolute top-5 right-5 text-black focus:outline-none">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />

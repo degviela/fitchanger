@@ -1,8 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
   import { ThemeContext } from '../Utilities/ThemeContext';
   import axios from 'axios';
   import { toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
+import {getCSRFToken} from "../Utilities/csrf";
 
   const Settings = () => {
     const { theme, toggleTheme } = useContext(ThemeContext);
@@ -13,22 +14,25 @@ import React, { useContext, useState } from 'react';
     const [lastName, setLastName] = useState('');
     const [message, setMessage] = useState('');
     const API_URL = process.env.REACT_APP_API_URL;
+    const AUTH_URL = process.env.REACT_APP_AUTH_URL;
 
-    // const handlePasswordReset = async () => {
-    //   if (!email) {
-    //     toast.error('Please enter your email.');
-    //     return;
-    //   }
-    //
-    //   try {
-    //     const response = await axios.post(`${API_URL}/password/reset`, { email });
-    //     setMessage('Password reset link sent to your email.');
-    //     toast.success('Password reset link sent to your email.');
-    //   } catch (error) {
-    //     setMessage('Failed to send password reset link.');
-    //     toast.error('Failed to send password reset link.');
-    //   }
-    // };
+    const [username, setUsername] = useState('');
+
+    useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const res = await axios.get(`${AUTH_URL}/user`, {
+            withCredentials: true,
+          });
+          setUsername(res.data.username);
+        } catch (err) {
+          console.error('Failed to fetch user:', err);
+        }
+      };
+
+      fetchUser();
+    }, []);
+
 
     const handleNameChange = async () => {
       if (!firstName || !lastName) {
@@ -37,14 +41,31 @@ import React, { useContext, useState } from 'react';
       }
 
       try {
-        const response = await axios.post(`${API_URL}/name/change`, { firstName, lastName });
-        setMessage('Name changed successfully.');
-        toast.success('Name changed successfully.');
+        await getCSRFToken();
+
+        await axios.put(`${AUTH_URL}/profile/update`, {
+          firstName,
+          lastName,
+          username: username,
+        }, {
+          headers: {
+            'Accept': 'application/json',
+          },
+          withCredentials: true,
+        });
+
+        toast.success('Name updated successfully!');
+        setMessage('Name updated successfully.');
+        setIsNameModalOpen(false);
       } catch (error) {
-        setMessage('Failed to change name.');
-        toast.error('Failed to change name.');
+        console.error('Failed to change name:', error);
+        const errMsg = error.response?.data?.message || 'Failed to change name.';
+        toast.error(errMsg);
+        setMessage(errMsg);
       }
     };
+
+
 
     const togglePasswordModal = () => {
       setIsPasswordModalOpen(!isPasswordModalOpen);

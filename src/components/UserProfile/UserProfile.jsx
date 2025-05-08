@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import BackButton from "../Utilities/Buttons/BackButton";
 
 const UserProfile = () => {
     const { id } = useParams();
@@ -73,6 +74,9 @@ const UserProfile = () => {
 
     return (
         <div className="flex flex-col items-center w-full min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300 p-5 mt-[6%]">
+            <div className="self-start mb-4">
+                <BackButton />
+            </div>
             <img
                 src={getImageUrl(user.profile_picture) || '/images/defaultprofilepic.jpg'}
                 alt={`${user.username}'s profile`}

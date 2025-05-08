@@ -15,7 +15,7 @@ const BackButton = ({ to }) => {
 
     return (
         <button
-            onClick={() => navigate(to)}
+            onClick={() => navigate(-1)}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             className="relative flex pt-1 pb-1 items-center text-current transition duration-300 ease-in-out group"
